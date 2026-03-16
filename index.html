@@ -3,222 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silicon Venture | V2.0</title>
+    <title>Silicon Venture | V3.0 CEO Dashboard</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #f8fafc; }
-        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
-        .action-btn { transition: all 0.2s ease-in-out; }
-        .action-btn:hover:not(:disabled) { transform: translateY(-2px); background: rgba(51, 65, 85, 0.9); border-color: rgba(255,255,255,0.2); }
-        .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #020617; color: #f8fafc; }
+        .glass { background: #0f172a; border: 1px solid #1e293b; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+        .glass:hover { border-color: #334155; }
+        .btn-action { transition: all 0.2s; }
+        .btn-action:hover:not(:disabled) { transform: translateY(-2px); filter: brightness(1.2); }
+        .btn-action:disabled { opacity: 0.4; cursor: not-allowed; filter: grayscale(1); }
+        /* Animation pour les événements */
+        @keyframes popIn { 0% { opacity: 0; transform: scale(0.95) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-anim { animation: popIn 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
     </style>
 </head>
-<body class="p-4 md:p-8 min-h-screen flex items-center justify-center">
+<body class="p-4 md:p-6 min-h-screen flex flex-col">
 
-    <div class="max-w-5xl w-full mx-auto">
-        <div class="flex justify-between items-end mb-4">
-            <h1 class="text-2xl font-black text-white tracking-tight">SILICON VENTURE <span class="text-sm font-normal text-slate-400">v2.0</span></h1>
-            <p id="turn" class="text-xl font-bold text-indigo-400">Semaine 1</p>
+    <nav class="flex justify-between items-center mb-6 pb-4 border-b border-slate-800">
+        <div>
+            <h1 class="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-sky-400">SILICON VENTURE</h1>
+            <p class="text-xs text-slate-500 font-medium">TABLEAU DE BORD EXÉCUTIF V3.0</p>
+        </div>
+        <div class="flex items-center gap-4">
+            <div class="text-right">
+                <p class="text-xs text-slate-400 uppercase tracking-widest">Semaine fiscale</p>
+                <p id="turn" class="text-xl font-bold text-white">S. 1</p>
+            </div>
+            <button onclick="game.nextTurn()" class="bg-indigo-600 hover:bg-indigo-500 px-6 py-3 rounded-lg font-bold shadow-lg shadow-indigo-500/20 transition flex items-center gap-2">
+                <i class="ph ph-fast-forward"></i> Fin de semaine
+            </button>
+        </div>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 flex-1">
+        
+        <div class="lg:col-span-1 space-y-4">
+            <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-2"><i class="ph ph-chart-line-up"></i> KPIs</h2>
+            
+            <div class="glass p-4 rounded-xl border-l-4 border-l-emerald-500">
+                <p class="text-xs text-slate-400 mb-1">Trésorerie</p>
+                <p id="money" class="text-3xl font-bold">10 000 €</p>
+            </div>
+            
+            <div class="glass p-4 rounded-xl border-l-4 border-l-sky-500">
+                <p class="text-xs text-slate-400 mb-1">Utilisateurs Actifs</p>
+                <p id="users" class="text-2xl font-bold">0</p>
+            </div>
+
+            <div class="glass p-4 rounded-xl border-l-4 border-l-violet-500 flex justify-between items-center">
+                <div>
+                    <p class="text-xs text-slate-400 mb-1">Produit & Rép.</p>
+                    <p class="text-lg font-bold">v<span id="productLevel">1.0</span></p>
+                </div>
+                <div class="text-right">
+                    <p class="text-xs text-slate-400 mb-1"><i class="ph-fill ph-star text-amber-400"></i></p>
+                    <p id="reputation" class="text-lg font-bold text-amber-400">10</p>
+                </div>
+            </div>
+
+            <div class="glass p-4 rounded-xl border-l-4 border-l-red-500">
+                <p class="text-xs text-slate-400 mb-1">Dette Bancaire</p>
+                <p id="debt" class="text-xl font-bold text-red-400">0 €</p>
+                <p class="text-[10px] text-slate-500 mt-1">Intérêts: 5%/sem</p>
+            </div>
         </div>
 
-        <header class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="glass p-4 rounded-2xl shadow-lg border-t-4 border-t-emerald-500">
-                <p class="text-slate-400 text-xs uppercase font-semibold mb-1">Trésorerie</p>
-                <p id="money" class="text-2xl font-bold text-white">10 000 €</p>
-            </div>
-            <div class="glass p-4 rounded-2xl shadow-lg border-t-4 border-t-sky-500">
-                <p class="text-slate-400 text-xs uppercase font-semibold mb-1">Produit & Rép.</p>
-                <p class="text-lg font-bold text-white">V.<span id="productLevel">1.0</span> | Rép: <span id="reputation" class="text-sky-400">10</span></p>
-            </div>
-            <div class="glass p-4 rounded-2xl shadow-lg border-t-4 border-t-violet-500">
-                <p class="text-slate-400 text-xs uppercase font-semibold mb-1">Équipe (<span id="totalStaff">1</span>/<span id="maxStaff">3</span>)</p>
-                <p class="text-sm font-bold text-white"><span id="devs" class="text-violet-400">1</span> Dev(s) | <span id="sales" class="text-amber-400">0</span> Com.</p>
-            </div>
-            <div class="glass p-4 rounded-2xl shadow-lg border-t-4 border-t-orange-500">
-                <p class="text-slate-400 text-xs uppercase font-semibold mb-1">Locaux</p>
-                <p id="officeName" class="text-lg font-bold text-white">Garage</p>
-                <p id="rentCost" class="text-xs text-slate-400">Loyer: 0 €/sem</p>
-            </div>
-        </header>
-
-        <main class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <section class="md:col-span-2 space-y-6">
-                <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold">Ressources Humaines & Opérations</h2>
-                    <button onclick="game.resetGame()" class="text-xs text-red-400 hover:text-red-300 underline">Réinitialiser la partie</button>
+        <div class="lg:col-span-2 space-y-6">
+            
+            <div class="glass p-5 rounded-2xl">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="font-bold"><i class="ph ph-users"></i> Équipe & Locaux</h2>
+                    <span class="text-xs bg-slate-800 px-2 py-1 rounded text-slate-300"><span id="totalStaff">1</span>/<span id="maxStaff">3</span> places (<span id="officeName">Garage</span>)</span>
                 </div>
-                
-                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <button id="btn-dev" onclick="game.doAction('hireDev')" class="glass action-btn p-4 rounded-xl text-left">
-                        <span class="block font-bold text-violet-400">Recruter un Développeur</span>
-                        <span class="text-xs text-slate-400">Coût: 1500€ | Salaire: 1000€/s</span>
+                <div class="grid grid-cols-2 gap-3">
+                    <button id="btn-dev" onclick="game.doAction('hireDev')" class="bg-slate-800 p-3 rounded-lg text-left btn-action border border-slate-700">
+                        <p class="font-bold text-sm text-violet-400">Recruter Développeur</p>
+                        <p class="text-[10px] text-slate-400">-1500€ | Boost la V.</p>
+                        <p class="text-xs mt-1"><span id="devs" class="font-bold text-white">1</span> en poste</p>
                     </button>
-
-                    <button id="btn-sales" onclick="game.doAction('hireSales')" class="glass action-btn p-4 rounded-xl text-left">
-                        <span class="block font-bold text-amber-400">Recruter un Commercial</span>
-                        <span class="text-xs text-slate-400">Coût: 1200€ | Salaire: 800€/s</span>
+                    <button id="btn-sales" onclick="game.doAction('hireSales')" class="bg-slate-800 p-3 rounded-lg text-left btn-action border border-slate-700">
+                        <p class="font-bold text-sm text-amber-400">Recruter Commercial</p>
+                        <p class="text-[10px] text-slate-400">-1200€ | Boost Ventes</p>
+                        <p class="text-xs mt-1"><span id="sales" class="font-bold text-white">0</span> en poste</p>
                     </button>
-
-                    <button onclick="game.doAction('marketing')" class="glass action-btn p-4 rounded-xl text-left">
-                        <span class="block font-bold text-sky-400">Campagne Marketing</span>
-                        <span class="text-xs text-slate-400">Coût: 2000€ | +15 Réputation</span>
-                    </button>
-
-                    <button id="btn-office" onclick="game.doAction('upgradeOffice')" class="glass action-btn p-4 rounded-xl text-left border-orange-500/30">
-                        <span class="block font-bold text-orange-400">Améliorer les Locaux</span>
-                        <span id="officeUpgradeText" class="text-xs text-slate-400">Passer au Coworking (5000€)</span>
+                    <button id="btn-office" onclick="game.doAction('upgradeOffice')" class="col-span-2 bg-slate-800 p-3 rounded-lg flex justify-between items-center btn-action border border-slate-700">
+                        <div>
+                            <p class="font-bold text-sm text-orange-400">Déménager</p>
+                            <p id="officeUpgradeText" class="text-[10px] text-slate-400">Coworking (5000€)</p>
+                        </div>
+                        <i class="ph ph-buildings text-xl opacity-50"></i>
                     </button>
                 </div>
+            </div>
 
-                <button onclick="game.nextTurn()" class="w-full bg-indigo-600 p-4 rounded-xl hover:bg-indigo-500 active:scale-95 transition text-center font-bold text-lg shadow-lg">
-                    Terminer la Semaine ➔
-                </button>
-
-                <div id="game-over" class="hidden bg-red-900/40 border border-red-500 p-6 rounded-xl text-center">
-                    <h2 class="text-2xl font-black text-red-500">BANQUEROUTE</h2>
-                    <button onclick="game.resetGame()" class="mt-4 bg-white text-black px-6 py-2 rounded-full font-bold text-sm">Recommencer</button>
+            <div class="glass p-5 rounded-2xl">
+                <h2 class="font-bold mb-4"><i class="ph ph-hard-drives"></i> Infrastructure & Acquisition</h2>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="game.doAction('upgradeServers')" class="bg-slate-800 p-3 rounded-lg text-left btn-action border border-slate-700">
+                        <p class="font-bold text-sm text-sky-400">Ajouter des Serveurs</p>
+                        <p class="text-[10px] text-slate-400">-2000€ | Capacité max</p>
+                        <p class="text-xs mt-1">Capacité: <span id="serverCap" class="font-bold text-white">1000</span></p>
+                    </button>
+                    <button onclick="game.doAction('marketing')" class="bg-slate-800 p-3 rounded-lg text-left btn-action border border-slate-700">
+                        <p class="font-bold text-sm text-pink-400">Lancer une Pub</p>
+                        <p class="text-[10px] text-slate-400">-2000€ | Attire les users</p>
+                        <p class="text-xs mt-1">+15 Réputation</p>
+                    </button>
                 </div>
-            </section>
+            </div>
 
-            <section class="flex flex-col">
-                <h2 class="text-xl font-bold mb-4">Événements</h2>
-                <div id="logs" class="glass h-[350px] rounded-xl p-4 overflow-y-auto text-sm space-y-2 flex flex-col-reverse"></div>
-            </section>
-        </main>
+            <div class="glass p-5 rounded-2xl border-l-4 border-l-slate-500">
+                <h2 class="font-bold mb-4"><i class="ph ph-bank"></i> Pôle Finance</h2>
+                <div class="flex gap-3">
+                    <button onclick="game.doAction('takeLoan')" class="flex-1 bg-slate-800 p-3 rounded-lg text-center btn-action border border-slate-700">
+                        <p class="font-bold text-sm">Emprunter 10 000€</p>
+                    </button>
+                    <button id="btn-repay" onclick="game.doAction('repayLoan')" class="flex-1 bg-slate-800 p-3 rounded-lg text-center btn-action border border-slate-700">
+                        <p class="font-bold text-sm">Rembourser 10 000€</p>
+                    </button>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="lg:col-span-1 flex flex-col h-full space-y-4">
+            <h2 class="text-sm font-bold text-slate-400 uppercase tracking-widest"><i class="ph ph-terminal"></i> Terminal / Logs</h2>
+            <div id="logs" class="glass flex-1 rounded-xl p-4 overflow-y-auto text-xs space-y-3 flex flex-col-reverse font-mono text-slate-300">
+                </div>
+            <button onclick="game.resetGame()" class="text-xs text-slate-500 hover:text-red-400 text-right w-full uppercase"><i class="ph ph-warning"></i> Réinitialiser S.O.</button>
+        </div>
+    </div>
+
+    <div id="event-modal" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-slate-800 border border-slate-600 rounded-2xl p-6 md:p-8 max-w-lg w-full shadow-2xl modal-anim">
+            <div class="flex items-center gap-3 mb-4 text-amber-400">
+                <i class="ph-fill ph-warning-circle text-3xl"></i>
+                <h2 id="event-title" class="text-xl font-black uppercase tracking-tight">DÉCISION REQUISE</h2>
+            </div>
+            <p id="event-text" class="text-slate-300 mb-8 leading-relaxed">Le texte de l'événement apparaîtra ici.</p>
+            <div id="event-choices" class="space-y-3">
+                </div>
+        </div>
+    </div>
+
+    <div id="game-over" class="hidden fixed inset-0 bg-red-950/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="text-center modal-anim">
+            <i class="ph-fill ph-skull text-6xl text-red-500 mb-4"></i>
+            <h2 class="text-4xl font-black text-white mb-2 tracking-tighter">LIQUIDATION JUDICIAIRE</h2>
+            <p class="text-red-300 mb-8 max-w-md mx-auto">La trésorerie est dans le rouge et les créanciers ont saisi vos locaux.</p>
+            <button onclick="game.resetGame()" class="bg-white text-black px-8 py-3 rounded-full font-bold uppercase text-sm hover:bg-slate-200">Fonder une nouvelle startup</button>
+        </div>
     </div>
 
     <script>
         const game = {
-            // Variables de base
+            // Variables
             money: 10000,
             reputation: 10,
             productLevel: 1.0,
             turn: 1,
             isGameOver: false,
             
-            // Nouvelles variables RH & Locaux
-            devs: 1,
-            sales: 0,
-            officeLevel: 1, // 1: Garage, 2: Coworking, 3: Bureaux
-
-            // Configuration des locaux
+            // RH & Locaux
+            devs: 1, sales: 0, officeLevel: 1,
             offices: {
-                1: { name: "Garage", maxStaff: 3, rent: 0, upgradeCost: 5000 },
-                2: { name: "Coworking", maxStaff: 10, rent: 800, upgradeCost: 25000 },
-                3: { name: "Bureaux Pro", maxStaff: 50, rent: 3500, upgradeCost: null }
+                1: { name: "Garage", max: 3, rent: 0, cost: 5000 },
+                2: { name: "Coworking", max: 10, rent: 800, cost: 25000 },
+                3: { name: "Bureaux Pro", max: 50, rent: 3500, cost: null }
             },
 
-            // Méthodes utilitaires
+            // V3: Infra & Finance
+            users: 0,
+            servers: 1, // 1 serveur = 1000 places
+            debt: 0,
+
+            // Événements possibles
+            eventsData: [
+                {
+                    title: "Offre de Rachat de Brevet",
+                    text: "Un géant de la Tech veut racheter l'une des fonctionnalités développées par votre équipe. C'est une belle rentrée d'argent, mais votre produit perdra en qualité le temps de tout refaire.",
+                    choices: [
+                        { text: "Accepter (+20 000€, -0.5 Qualité)", action: () => { game.money += 20000; game.productLevel = Math.max(1, game.productLevel - 0.5); game.log("Brevet vendu.", "warning"); } },
+                        { text: "Refuser (Garder la technologie)", action: () => { game.log("Offre de rachat refusée.", "info"); } }
+                    ]
+                },
+                {
+                    title: "Bad Buzz Serveur",
+                    text: "Un influenceur s'est moqué de la lenteur de votre plateforme. Voulez-vous dépenser de l'argent en urgence pour corriger le tir via une agence de comm, ou ignorer ?",
+                    choices: [
+                        { text: "Payer l'agence (-3 000€, +10 Rép)", action: () => { game.money -= 3000; game.reputation += 10; game.log("Crise gérée par l'agence.", "success"); } },
+                        { text: "Ignorer (-15 Rép)", action: () => { game.reputation = Math.max(0, game.reputation - 15); game.log("Bad buzz ignoré. La réputation chute.", "danger"); } }
+                    ]
+                },
+                {
+                    title: "Pression des Investisseurs",
+                    text: "Si vous avez de la dette, la banque s'inquiète. Sinon, un Business Angel veut vous rencontrer.",
+                    choices: [
+                        { text: "Organiser un gala (-5000€, +30 Rép)", action: () => { game.money -= 5000; game.reputation += 30; game.log("Gala réussi, la hype monte.", "success"); } },
+                        { text: "Rester focus sur le code (+0.2 Qualité)", action: () => { game.productLevel += 0.2; game.log("L'équipe reste focus.", "info"); } }
+                    ]
+                }
+            ],
+
+            // Utilitaires
             getTotalStaff() { return this.devs + this.sales; },
-            getMaxStaff() { return this.offices[this.officeLevel].maxStaff; },
-            getRent() { return this.offices[this.officeLevel].rent; },
+            getMaxStaff() { return this.offices[this.officeLevel].max; },
+            getServerCap() { return this.servers * 1000; },
 
             saveGame() {
-                const state = { money: this.money, reputation: this.reputation, devs: this.devs, sales: this.sales, officeLevel: this.officeLevel, productLevel: this.productLevel, turn: this.turn, isGameOver: this.isGameOver };
-                localStorage.setItem('siliconVenture_v2', JSON.stringify(state));
+                // Changement de clé pour forcer une nouvelle sauvegarde propre
+                const state = { money: this.money, reputation: this.reputation, devs: this.devs, sales: this.sales, officeLevel: this.officeLevel, productLevel: this.productLevel, turn: this.turn, users: this.users, servers: this.servers, debt: this.debt, isGameOver: this.isGameOver };
+                localStorage.setItem('siliconVenture_v3', JSON.stringify(state));
             },
 
             loadGame() {
-                const saved = localStorage.getItem('siliconVenture_v2');
-                if (saved) { Object.assign(this, JSON.parse(saved)); this.log("💾 Partie chargée.", "info"); }
-                else { this.log("🚀 Lancement : Vous êtes seul dans votre garage avec une idée."); }
+                const saved = localStorage.getItem('siliconVenture_v3');
+                if (saved) { Object.assign(this, JSON.parse(saved)); this.log("Système V3 restauré.", "info"); }
+                else { this.log("Initialisation... Bienvenue CEO."); }
             },
 
             resetGame() {
-                if(confirm("Tout effacer ?")) { localStorage.removeItem('siliconVenture_v2'); location.reload(); }
+                if(confirm("Détruire la base de données et recommencer ?")) { localStorage.removeItem('siliconVenture_v3'); location.reload(); }
             },
 
             updateUI() {
-                document.getElementById('money').innerText = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(this.money);
+                const formatEUR = (num) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(num);
+                const formatNum = (num) => new Intl.NumberFormat('fr-FR').format(num);
+
+                document.getElementById('money').innerText = formatEUR(this.money);
                 document.getElementById('reputation').innerText = Math.floor(this.reputation);
                 document.getElementById('productLevel').innerText = this.productLevel.toFixed(1);
-                document.getElementById('turn').innerText = "Semaine " + this.turn;
+                document.getElementById('turn').innerText = "S. " + this.turn;
+                document.getElementById('users').innerText = formatNum(Math.floor(this.users));
+                document.getElementById('serverCap').innerText = formatNum(this.getServerCap());
+                document.getElementById('debt').innerText = formatEUR(this.debt);
                 
-                // Maj RH
                 document.getElementById('devs').innerText = this.devs;
                 document.getElementById('sales').innerText = this.sales;
                 document.getElementById('totalStaff').innerText = this.getTotalStaff();
                 document.getElementById('maxStaff').innerText = this.getMaxStaff();
-                
-                // Maj Locaux
                 document.getElementById('officeName').innerText = this.offices[this.officeLevel].name;
-                document.getElementById('rentCost').innerText = `Loyer: ${this.getRent()} €/sem`;
 
-                // Griser les boutons si capacité max atteinte
+                // Griser les boutons
                 const isFull = this.getTotalStaff() >= this.getMaxStaff();
                 document.getElementById('btn-dev').disabled = isFull;
                 document.getElementById('btn-sales').disabled = isFull;
+                document.getElementById('btn-repay').disabled = this.debt <= 0 || this.money < 10000;
 
-                // Griser bouton locaux si max
                 if(this.officeLevel >= 3) {
                     document.getElementById('btn-office').disabled = true;
-                    document.getElementById('officeUpgradeText').innerText = "Locaux maximums atteints";
+                    document.getElementById('officeUpgradeText').innerText = "Locaux Max.";
                 } else {
-                    document.getElementById('officeUpgradeText').innerText = `Passer niveau sup. (${this.offices[this.officeLevel].upgradeCost}€)`;
+                    document.getElementById('officeUpgradeText').innerText = `${this.offices[this.officeLevel+1].name} (${this.offices[this.officeLevel].cost}€)`;
                 }
                 
                 if(this.money < 0) { this.isGameOver = true; document.getElementById('game-over').classList.remove('hidden'); }
                 this.saveGame();
             },
 
-            log(message, type = 'info') {
-                const colors = { info: 'text-slate-300', success: 'text-emerald-400', danger: 'text-red-400', warning: 'text-amber-400' };
-                document.getElementById('logs').innerHTML += `<div class="pb-2 border-b border-white/5 ${colors[type]}"><span class="text-[10px] opacity-50 mr-2">S${this.turn}</span> ${message}</div>`;
+            log(msg, type = 'info') {
+                const colors = { info: 'text-slate-400', success: 'text-emerald-400', danger: 'text-red-400', warning: 'text-amber-400' };
+                const icons = { info: 'ph-info', success: 'ph-check-circle', danger: 'ph-warning-octagon', warning: 'ph-lightning' };
+                document.getElementById('logs').innerHTML += `<div class="pb-2 border-b border-slate-800 ${colors[type]} flex items-start gap-2"><i class="ph ${icons[type]} mt-0.5"></i> <span><span class="opacity-40">[S${this.turn}]</span> ${msg}</span></div>`;
             },
 
             doAction(action) {
                 if(this.isGameOver) return;
 
-                if(action === 'hireDev') {
-                    if(this.getTotalStaff() >= this.getMaxStaff()) return this.log("❌ Plus de place dans les locaux !", "danger");
-                    if(this.money >= 1500) { this.devs++; this.money -= 1500; this.log("👨‍💻 Nouveau Dev recruté.", "success"); } 
-                    else this.log("❌ Fonds insuffisants.", "danger");
-                }
-                else if(action === 'hireSales') {
-                    if(this.getTotalStaff() >= this.getMaxStaff()) return this.log("❌ Plus de place dans les locaux !", "danger");
-                    if(this.money >= 1200) { this.sales++; this.money -= 1200; this.log("🤝 Nouveau Commercial recruté.", "success"); } 
-                    else this.log("❌ Fonds insuffisants.", "danger");
-                }
-                else if(action === 'marketing') {
-                    if(this.money >= 2000) { this.money -= 2000; this.reputation += 15; this.log("📈 Campagne pub lancée.", "success"); } 
-                    else this.log("❌ Fonds insuffisants.", "danger");
-                }
+                if(action === 'hireDev' && this.money >= 1500 && this.getTotalStaff() < this.getMaxStaff()) { this.devs++; this.money -= 1500; this.log("Dev engagé.", "success"); }
+                else if(action === 'hireSales' && this.money >= 1200 && this.getTotalStaff() < this.getMaxStaff()) { this.sales++; this.money -= 1200; this.log("Commercial engagé.", "success"); }
+                else if(action === 'marketing' && this.money >= 2000) { this.money -= 2000; this.reputation += 15; this.log("Pub lancée (+15 Rép).", "success"); }
+                else if(action === 'upgradeServers' && this.money >= 2000) { this.money -= 2000; this.servers++; this.log(`Serveurs étendus (${this.getServerCap()} places).`, "info"); }
+                else if(action === 'takeLoan') { this.debt += 10000; this.money += 10000; this.log("Emprunt de 10k€ effectué. Attention aux intérêts.", "warning"); }
+                else if(action === 'repayLoan' && this.debt >= 10000 && this.money >= 10000) { this.debt -= 10000; this.money -= 10000; this.log("Remboursement de 10k€.", "success"); }
                 else if(action === 'upgradeOffice') {
-                    const cost = this.offices[this.officeLevel].upgradeCost;
-                    if(cost && this.money >= cost) {
-                        this.money -= cost;
-                        this.officeLevel++;
-                        this.log(`🏢 Déménagement dans : ${this.offices[this.officeLevel].name} !`, "success");
-                    } else this.log("❌ Impossible de déménager.", "danger");
+                    const cost = this.offices[this.officeLevel].cost;
+                    if(cost && this.money >= cost) { this.money -= cost; this.officeLevel++; this.log(`Déménagement réussi : ${this.offices[this.officeLevel].name}.`, "success"); }
                 }
                 this.updateUI();
             },
 
+            triggerEvent() {
+                // 25% de chance d'avoir un événement à la fin d'un tour
+                if(Math.random() > 0.25) return this.finalizeTurn();
+
+                const event = this.eventsData[Math.floor(Math.random() * this.eventsData.length)];
+                document.getElementById('event-title').innerText = event.title;
+                document.getElementById('event-text').innerText = event.text;
+                
+                const choicesDiv = document.getElementById('event-choices');
+                choicesDiv.innerHTML = ''; // Nettoyer
+                
+                event.choices.forEach(choice => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full bg-slate-700 hover:bg-slate-600 text-left p-4 rounded-xl font-bold transition border border-slate-600";
+                    btn.innerText = choice.text;
+                    btn.onclick = () => {
+                        choice.action();
+                        document.getElementById('event-modal').classList.add('hidden');
+                        this.finalizeTurn();
+                    };
+                    choicesDiv.appendChild(btn);
+                });
+
+                document.getElementById('event-modal').classList.remove('hidden');
+            },
+
             nextTurn() {
                 if(this.isGameOver) return;
+                // Lance la séquence de fin de tour (calculs d'abord, événement ensuite)
+                
+                // 1. Mise à jour Produit
+                this.productLevel += (this.devs * 0.1);
 
-                // R&D Automatique : Les devs améliorent le produit à chaque tour
-                const devBoost = (this.devs * 0.1);
-                this.productLevel += devBoost;
+                // 2. Calcul Utilisateurs (Basé sur la réputation et le produit, amplifié par les sales)
+                const newUsers = (this.reputation * 15) * this.productLevel * (1 + (this.sales * 0.2));
+                // L'ancien nombre d'utilisateurs reste, on ajoute les nouveaux
+                this.users += newUsers;
 
-                // Salaires et Loyer
+                // 3. Check Crash Serveur
+                let serverPenalty = 0;
+                if(this.users > this.getServerCap()) {
+                    const overflow = this.users - this.getServerCap();
+                    this.log(`🔥 CRASH SERVEUR ! ${Math.floor(overflow)} utilisateurs bloqués.`, "danger");
+                    this.users = this.getServerCap(); // On perd l'excédent
+                    this.reputation = Math.max(0, this.reputation - 10); // Punition sévère
+                    serverPenalty = overflow * 0.5; // Coût de réparation d'urgence
+                }
+
+                // 4. Revenus (1 user = 1.5€ par semaine en moyenne)
+                const revenue = this.users * 1.5;
+
+                // 5. Coûts
                 const salaries = (this.devs * 1000) + (this.sales * 800);
-                const rent = this.getRent();
-                const totalCosts = salaries + rent;
-                
-                // Revenus : dépendent des commerciaux, de la réputation et du produit
-                // (Même sans commercial, le produit se vend un peu de lui-même)
-                const baseSales = (this.reputation * 50) * this.productLevel;
-                const salesBoost = 1 + (this.sales * 0.5); // Chaque commercial booste les ventes de 50%
-                const revenue = baseSales * salesBoost;
-                
-                const profit = revenue - totalCosts;
-                this.money += profit;
+                const rent = this.offices[this.officeLevel].rent;
+                const serverCosts = this.servers * 300; // Entretien serveurs
+                const interest = this.debt * 0.05; // 5% d'intérêts sur la dette
 
-                this.turn++;
-                this.log(`📊 Bilan : ${profit >= 0 ? '+' : ''}${Math.floor(profit)}€ (Ventes: ${Math.floor(revenue)}€ | Frais: -${totalCosts}€)`, profit >= 0 ? "success" : "warning");
+                const totalCosts = salaries + rent + serverCosts + interest + serverPenalty;
                 
+                this.money = this.money + revenue - totalCosts;
+
+                this.log(`Bilan S${this.turn} : Rev. +${Math.floor(revenue)}€ | Charges -${Math.floor(totalCosts)}€`, revenue >= totalCosts ? "success" : "warning");
+
+                // Lancer l'événement aléatoire (qui validera le tour ensuite)
+                this.triggerEvent();
+            },
+
+            finalizeTurn() {
+                this.turn++;
                 this.updateUI();
             }
         };
