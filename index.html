@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Silicon Venture | Business Sim</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
+        .action-btn { transition: all 0.2s ease-in-out; }
+        .action-btn:hover { transform: translateY(-2px); background: rgba(51, 65, 85, 0.9); }
+    </style>
+</head>
+<body class="p-4 md:p-8 min-h-screen flex items-center justify-center">
+
+    <div class="max-w-5xl w-full mx-auto">
+        <header class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+            <div class="glass p-5 rounded-2xl text-center shadow-lg">
+                <p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-1">Trésorerie</p>
+                <p id="money" class="text-2xl md:text-3xl font-bold text-emerald-400">10 000 €</p>
+            </div>
+            <div class="glass p-5 rounded-2xl text-center shadow-lg">
+                <p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-1">Réputation</p>
+                <p id="reputation" class="text-2xl md:text-3xl font-bold text-sky-400">0</p>
+            </div>
+            <div class="glass p-5 rounded-2xl text-center shadow-lg">
+                <p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-1">Équipe</p>
+                <p id="staff" class="text-2xl md:text-3xl font-bold text-violet-400">1</p>
+            </div>
+            <div class="glass p-5 rounded-2xl text-center shadow-lg">
+                <p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-1">Semaine</p>
+                <p id="turn" class="text-2xl md:text-3xl font-bold text-white">1</p>
+            </div>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <section class="md:col-span-2 space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-xl font-bold">Décisions Stratégiques</h2>
+                    <button onclick="game.resetGame()" class="text-xs text-red-400 hover:text-red-300 transition uppercase tracking-widest">Recommencer à zéro</button>
+                </div>
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <button onclick="game.doAction('hire')" class="glass action-btn p-5 rounded-xl text-left group">
+                        <span class="block font-bold text-lg group-hover:text-emerald-400 transition">Recruter un Talent</span>
+                        <span class="text-sm text-slate-400">-1 500 € (Salaire à payer ensuite)</span>
+                    </button>
+
+                    <button onclick="game.doAction('marketing')" class="glass action-btn p-5 rounded-xl text-left group">
+                        <span class="block font-bold text-lg group-hover:text-sky-400 transition">Campagne Pub</span>
+                        <span class="text-sm text-slate-400">-2 000 € / +15 Réputation</span>
+                    </button>
+
+                    <button onclick="game.doAction('research')" class="glass action-btn p-5 rounded-xl text-left group">
+                        <span class="block font-bold text-lg group-hover:text-amber-400 transition">R&D Produit</span>
+                        <span class="text-sm text-slate-400">-1 000 € / Améliore les ventes</span>
+                    </button>
+
+                    <button onclick="game.nextTurn()" class="bg-indigo-600 p-5 rounded-xl hover:bg-indigo-500 hover:scale-[1.02] active:scale-95 transition text-center font-bold text-lg shadow-xl shadow-indigo-500/20">
+                        Passer à la Semaine Suivante ➔
+                    </button>
+                </div>
+
+                <div id="game-over" class="hidden bg-red-900/40 border border-red-500/50 p-8 rounded-2xl text-center backdrop-blur-md mt-4">
+                    <h2 class="text-3xl font-black text-red-500 mb-2">BANQUEROUTE !</h2>
+                    <p class="mb-6 text-slate-300">Votre trésorerie est dans le rouge. L'entreprise ferme ses portes.</p>
+                    <button onclick="game.resetGame()" class="bg-white text-black px-6 py-2 rounded-full font-bold uppercase text-sm hover:bg-slate-200 transition">Essayer une autre stratégie</button>
+                </div>
+            </section>
+
+            <section class="flex flex-col">
+                <h2 class="text-xl font-bold mb-4">Journal d'activité</h2>
+                <div id="logs" class="glass h-[400px] rounded-2xl p-5 overflow-y-auto text-sm space-y-3 flex flex-col-reverse shadow-inner">
+                    </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const game = {
+            money: 10000,
+            reputation: 10,
+            staff: 1,
+            productLevel: 1,
+            turn: 1,
+            isGameOver: false,
+
+            // --- SYSTÈME DE SAUVEGARDE ---
+            saveGame() {
+                const state = {
+                    money: this.money,
+                    reputation: this.reputation,
+                    staff: this.staff,
+                    productLevel: this.productLevel,
+                    turn: this.turn,
+                    isGameOver: this.isGameOver
+                };
+                localStorage.setItem('siliconVenture_github_v1', JSON.stringify(state));
+            },
+
+            loadGame() {
+                const saved = localStorage.getItem('siliconVenture_github_v1');
+                if (saved) {
+                    const state = JSON.parse(saved);
+                    Object.assign(this, state);
+                    this.log("💾 Partie chargée avec succès.", "success");
+                } else {
+                    this.log("🚀 Lancement de la startup. Essayez de survivre au premier mois !");
+                }
+            },
+
+            resetGame() {
+                if(confirm("Êtes-vous sûr de vouloir déclarer faillite et tout recommencer ?")) {
+                    localStorage.removeItem('siliconVenture_github_v1');
+                    location.reload();
+                }
+            },
+
+            // --- AFFICHAGE ---
+            updateUI() {
+                document.getElementById('money').innerText = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(this.money);
+                document.getElementById('reputation').innerText = Math.floor(this.reputation);
+                document.getElementById('staff').innerText = this.staff;
+                document.getElementById('turn').innerText = this.turn;
+                
+                if(this.money < 0) {
+                    this.isGameOver = true;
+                    document.getElementById('game-over').classList.remove('hidden');
+                }
+                this.saveGame(); // Sauvegarde automatique à chaque changement
+            },
+
+            log(message, type = 'info') {
+                const logsDiv = document.getElementById('logs');
+                const colors = { info: 'text-slate-300', success: 'text-emerald-400', danger: 'text-red-400', warning: 'text-amber-400' };
+                const entry = `<div class="pb-2 border-b border-white/5 ${colors[type]}"><span class="text-[10px] opacity-50 mr-2">SEM ${this.turn}</span> ${message}</div>`;
+                logsDiv.innerHTML += entry;
+            },
+
+            // --- MÉCANIQUES DE JEU ---
+            doAction(action) {
+                if(this.isGameOver) return;
+
+                switch(action) {
+                    case 'hire':
+                        if(this.money >= 1500) {
+                            this.staff++;
+                            this.money -= 1500;
+                            this.log("👤 Un nouveau développeur a rejoint l'équipe.", "success");
+                        } else { this.log("❌ Fonds insuffisants pour recruter !", "danger"); }
+                        break;
+                    case 'marketing':
+                        if(this.money >= 2000) {
+                            this.money -= 2000;
+                            this.reputation += 15;
+                            this.log("📈 La campagne marketing fait parler de vous.", "success");
+                        } else { this.log("❌ Fonds insuffisants pour la pub !", "danger"); }
+                        break;
+                    case 'research':
+                        if(this.money >= 1000) {
+                            this.money -= 1000;
+                            this.productLevel += 0.5;
+                            this.log("🔬 Votre produit gagne en qualité.", "success");
+                        } else { this.log("❌ Fonds insuffisants pour la R&D !", "danger"); }
+                        break;
+                }
+                this.updateUI();
+            },
+
+            nextTurn() {
+                if(this.isGameOver) return;
+
+                // 1. Payer les salaires
+                const costs = this.staff * 900;
+                
+                // 2. Encaisser les ventes (Formule basée sur l'équipe, la réputation et la qualité)
+                const revenue = (this.staff * 600) + (this.reputation * 180) * (this.productLevel * 0.9);
+                
+                // 3. Bilan
+                const profit = revenue - costs;
+                this.money += profit;
+
+                // 4. Événements aléatoires
+                const rand = Math.random();
+                if(rand > 0.85) {
+                    this.money -= 2500;
+                    this.log("⚠️ Panne de serveurs ! Coûts de réparation : 2500€", "danger");
+                } else if(rand < 0.1) {
+                    this.reputation += 20;
+                    this.log("🌟 Un grand journal a écrit un article sur vous ! +20 Rép", "success");
+                }
+
+                this.turn++;
+                this.log(`📊 Bilan S${this.turn-1} : ${profit >= 0 ? '+' : ''}${Math.floor(profit)}€ (Revenus: ${Math.floor(revenue)}€ / Salaires: -${costs}€)`, profit >= 0 ? "success" : "warning");
+                this.updateUI();
+            }
+        };
+
+        // Lancement au chargement de la page
+        window.onload = () => {
+            game.loadGame();
+            game.updateUI();
+        };
+    </script>
+</body>
+</html>
