@@ -3,123 +3,137 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silicon Venture | V4.0 Business Simulator</title>
+    <title>Silicon Venture | V5.0 Narrative Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #0f172a; }
-        .card { background: white; border: 1px solid #e2e8f0; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); }
-        .input-field { width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; outline: none; transition: border 0.2s; }
-        .input-field:focus { border-color: #6366f1; box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2); }
-        /* Style des curseurs */
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #f8fafc; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 1rem; }
+        .input-dark { background: #1e293b; border: 1px solid #334155; color: white; padding: 0.5rem; border-radius: 0.5rem; width: 100%; outline: none; }
+        .input-dark:focus { border-color: #6366f1; }
         input[type=range] { accent-color: #6366f1; }
+        .event-radio:checked + div { border-color: #6366f1; background-color: rgba(99, 102, 241, 0.1); }
     </style>
 </head>
-<body class="p-4 md:p-8 min-h-screen">
+<body class="p-4 md:p-6 min-h-screen">
 
-    <div class="max-w-6xl mx-auto">
+    <div class="max-w-7xl mx-auto">
         
-        <header class="flex justify-between items-end mb-8 border-b-2 border-slate-200 pb-4">
+        <header class="flex flex-wrap justify-between items-end mb-6 pb-4 border-b border-slate-800 gap-4">
             <div>
-                <h1 class="text-3xl font-black text-slate-900 tracking-tight">SILICON VENTURE <span class="text-sm font-bold text-indigo-600 bg-indigo-100 px-2 py-1 rounded">SIMULATEUR EXÉCUTIF</span></h1>
-                <p class="text-slate-500 mt-1">Analyse du marché et décisions stratégiques.</p>
+                <h1 class="text-3xl font-extrabold text-white tracking-tight">SILICON VENTURE <span class="text-xs font-bold text-indigo-400 border border-indigo-400 px-2 py-1 rounded ml-2">V5.0 CONTINUITY</span></h1>
+                <p class="text-slate-400 mt-1 text-sm">Moteur d'événements à long terme et économie hebdomadaire.</p>
             </div>
             <div class="text-right">
-                <p class="text-sm text-slate-500 font-bold uppercase tracking-widest">Période Fiscale</p>
-                <p id="turn-display" class="text-2xl font-black text-indigo-600">Trimestre 1</p>
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Temps écoulé</p>
+                <p id="ui-turn" class="text-2xl font-black text-indigo-400">Semaine 1</p>
             </div>
         </header>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="card p-5 border-t-4 border-t-emerald-500">
-                <p class="text-xs text-slate-500 font-bold uppercase mb-1">Trésorerie</p>
-                <p id="kpi-money" class="text-2xl font-black text-slate-800">50 000 €</p>
+        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+            <div class="glass-panel p-4 border-t-2 border-t-emerald-500">
+                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Trésorerie</p>
+                <p id="ui-money" class="text-xl font-bold">50 000 €</p>
             </div>
-            <div class="card p-5 border-t-4 border-t-blue-500">
-                <p class="text-xs text-slate-500 font-bold uppercase mb-1">Image de Marque (0-100)</p>
-                <p id="kpi-brand" class="text-2xl font-black text-slate-800">50</p>
+            <div class="glass-panel p-4 border-t-2 border-t-sky-500">
+                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Utilisateurs</p>
+                <p id="ui-users" class="text-xl font-bold">0</p>
             </div>
-            <div class="card p-5 border-t-4 border-t-purple-500">
-                <p class="text-xs text-slate-500 font-bold uppercase mb-1">Qualité Produit (0-100)</p>
-                <p id="kpi-quality" class="text-2xl font-black text-slate-800">40</p>
+            <div class="glass-panel p-4 border-t-2 border-t-blue-500">
+                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Marque (0-100)</p>
+                <p id="ui-brand" class="text-xl font-bold">50</p>
             </div>
-            <div class="card p-5 border-t-4 border-t-orange-500">
-                <p class="text-xs text-slate-500 font-bold uppercase mb-1">Climat Social (0-100)</p>
-                <p id="kpi-morale" class="text-2xl font-black text-slate-800">70</p>
+            <div class="glass-panel p-4 border-t-2 border-t-purple-500">
+                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Qualité (0-100)</p>
+                <p id="ui-quality" class="text-xl font-bold">40</p>
+            </div>
+            <div class="glass-panel p-4 border-t-2 border-t-orange-500">
+                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Moral Équipe</p>
+                <p id="ui-morale" class="text-xl font-bold">70</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
-            <div class="lg:col-span-2 space-y-6">
+            <div class="lg:col-span-8 space-y-6">
                 
-                <div class="card p-6 bg-white">
-                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="ph-fill ph-sliders text-indigo-500"></i> Paramètres Opérationnels (Trimestre à venir)</h2>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-panel p-6">
+                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="ph-fill ph-sliders text-indigo-400"></i> Socle Stratégique Hebdomadaire (5 Actions)</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Prix de l'abonnement mensuel (€)</label>
-                            <p class="text-xs text-slate-500 mb-2">Coût de revient estimé: 10€/user. Plus le prix est haut, plus la demande baisse.</p>
-                            <input type="number" id="input-price" class="input-field text-lg font-bold" value="29" min="10" max="200">
+                            <label class="block text-xs font-bold text-slate-400 mb-1">1. Prix Abonnement Mensuel (€)</label>
+                            <input type="number" id="in-price" class="input-dark" value="15" min="0">
                         </div>
                         
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Budget Marketing Total (€)</label>
-                            <p class="text-xs text-slate-500 mb-2">Acquisition client et notoriété.</p>
-                            <input type="number" id="input-marketing" class="input-field text-lg font-bold" value="5000" min="0" step="1000">
+                            <label class="block text-xs font-bold text-slate-400 mb-1">2. Budget Marketing (Hebdo)</label>
+                            <input type="number" id="in-marketing" class="input-dark" value="1000" min="0" step="500">
                         </div>
 
                         <div>
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Budget R&D & Tech (€)</label>
-                            <p class="text-xs text-slate-500 mb-2">Améliore la Qualité Produit sur le long terme.</p>
-                            <input type="number" id="input-rnd" class="input-field text-lg font-bold" value="3000" min="0" step="1000">
+                            <label class="block text-xs font-bold text-slate-400 mb-1">3. Budget R&D (Hebdo)</label>
+                            <input type="number" id="in-rnd" class="input-dark" value="1500" min="0" step="500">
                         </div>
 
-                        <div class="col-span-1 md:col-span-2 mt-4">
-                            <label class="block text-sm font-bold text-slate-700 mb-2">Politique Managériale (Pression vs Bien-être)</label>
-                            <div class="flex items-center gap-4">
-                                <span class="text-xs font-bold text-red-500 w-24 text-right">Productivité Max</span>
-                                <input type="range" id="input-hr-slider" min="1" max="5" value="3" class="flex-1 h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer">
-                                <span class="text-xs font-bold text-emerald-500 w-24">Bien-être Total</span>
-                            </div>
-                            <p class="text-xs text-slate-500 mt-2 text-center">Impacter le climat social vs la vitesse de production.</p>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-400 mb-1">4. Serveurs & Infra (Hebdo)</label>
+                            <input type="number" id="in-servers" class="input-dark" value="500" min="0" step="100">
                         </div>
+
+                        <div class="md:col-span-2 mt-2">
+                            <label class="block text-xs font-bold text-slate-400 mb-2">5. Pression Managériale (Impacte Moral vs Vitesse R&D)</label>
+                            <div class="flex items-center gap-4">
+                                <span class="text-xs text-red-400">Crunch</span>
+                                <input type="range" id="in-hr" min="1" max="5" value="3" class="flex-1 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer">
+                                <span class="text-xs text-emerald-400">Détente</span>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
-                <div class="card p-6 bg-slate-50 border-slate-300">
-                    <h2 class="text-xl font-bold mb-4 flex items-center gap-2"><i class="ph-fill ph-briefcase text-slate-700"></i> Cas Stratégiques du Trimestre</h2>
-                    <div id="scenarios-container" class="space-y-6">
+                <div class="glass-panel p-6 border-l-4 border-l-indigo-500">
+                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="ph-fill ph-git-branch text-indigo-400"></i> Dossiers en Cours (5 Actions)</h2>
+                    <p class="text-xs text-slate-400 mb-4">Ces dossiers dépendent de vos choix précédents et de l'état de votre entreprise.</p>
+                    
+                    <div id="events-container" class="space-y-4">
                         </div>
                 </div>
 
-                <button onclick="game.simulateTurn()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white p-5 rounded-xl font-black text-xl shadow-xl transition transform hover:-translate-y-1">
-                    EXÉCUTER LA SIMULATION DU MARCHÉ ➔
+                <button onclick="game.simulateWeek()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white p-4 rounded-xl font-black text-lg shadow-lg transition transform hover:-translate-y-1">
+                    VALIDER ET PASSER À LA SEMAINE SUIVANTE ➔
                 </button>
             </div>
 
-            <div class="lg:col-span-1">
-                <div class="card p-6 sticky top-6 bg-slate-900 text-white">
-                    <h2 class="text-lg font-bold mb-4 border-b border-slate-700 pb-2 flex justify-between items-center">
-                        <span>Bilan (T-<span id="report-turn">0</span>)</span>
-                        <button onclick="game.resetGame()" class="text-xs font-normal text-slate-500 hover:text-red-400 underline">Reset Jeu</button>
-                    </h2>
-                    
-                    <div id="report-content" class="space-y-4 text-sm">
-                        <p class="text-slate-400 italic text-center py-8">En attente de la première simulation...</p>
+            <div class="lg:col-span-4 space-y-6">
+                
+                <div class="glass-panel p-5">
+                    <h2 class="text-sm font-bold mb-3 flex items-center gap-2 text-slate-300"><i class="ph-fill ph-brain text-purple-400"></i> Mémoire / Stratégies Actives</h2>
+                    <div id="ui-flags" class="flex flex-wrap gap-2 text-[10px] uppercase font-bold">
+                        <span class="text-slate-500 italic">Aucun projet à long terme actif.</span>
                     </div>
                 </div>
-            </div>
 
+                <div class="glass-panel p-5 sticky top-6">
+                    <h2 class="text-sm font-bold mb-4 border-b border-slate-700 pb-2 flex justify-between items-center">
+                        <span>Bilan (Semaine <span id="ui-report-turn">0</span>)</span>
+                        <button onclick="game.resetGame()" class="text-[10px] text-red-400 hover:underline uppercase">Reset</button>
+                    </h2>
+                    <div id="ui-report" class="space-y-3 text-xs text-slate-300 font-mono">
+                        <p class="text-center italic opacity-50 py-4">Prenez vos décisions pour voir le premier bilan.</p>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <div id="game-over" class="hidden fixed inset-0 bg-slate-900/90 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-            <div class="card p-8 text-center max-w-md w-full">
-                <i class="ph-fill ph-warning text-6xl text-red-500 mb-4"></i>
-                <h2 class="text-3xl font-black text-slate-900 mb-2">DÉPÔT DE BILAN</h2>
-                <p class="text-slate-600 mb-6">Trésorerie négative. Le conseil d'administration vous a révoqué.</p>
-                <button onclick="game.resetGame()" class="bg-slate-900 text-white px-6 py-2 rounded-lg font-bold">Nouveau mandat (Reset)</button>
+        <div id="game-over" class="hidden fixed inset-0 bg-slate-950/90 z-50 flex items-center justify-center p-4">
+            <div class="glass-panel p-8 text-center max-w-md w-full border-red-500">
+                <i class="ph-fill ph-skull text-6xl text-red-500 mb-4"></i>
+                <h2 class="text-2xl font-black text-white mb-2">BANQUEROUTE</h2>
+                <button onclick="game.resetGame()" class="mt-4 bg-white text-black px-6 py-2 rounded font-bold">Recommencer</button>
             </div>
         </div>
 
@@ -127,255 +141,302 @@
 
     <script>
         const game = {
-            // État de l'entreprise
             state: {
                 turn: 1,
                 money: 50000,
-                brand: 50,    // Image de marque (0-100)
-                quality: 40,  // Qualité produit (0-100)
-                morale: 70,   // Climat social (0-100)
-                baseCostPerUser: 10,
+                users: 0,
+                brand: 50,
+                quality: 40,
+                morale: 70,
+                flags: {}, // C'EST LE COEUR DU SYSTÈME LONG TERME. Ex: { "ia_started": true }
                 lastReport: null,
                 isGameOver: false
             },
 
-            // Base de données de cas d'entreprise (On en tire 2 ou 3 au hasard par trimestre)
-            allScenarios: [
+            // LE MOTEUR NARRATIF (Les événements qui s'enchaînent)
+            eventPool: [
+                // --- ARC NARRATIF 1 : L'INTELLIGENCE ARTIFICIELLE ---
                 {
-                    id: "data_leak",
-                    title: "🔒 Faille de Sécurité Détectée",
-                    desc: "Un développeur a laissé une base de données ouverte. Faut-il prévenir les clients au risque de détruire notre image, ou étouffer l'affaire ?",
+                    id: "ai_1_pitch",
+                    condition: (s) => s.turn >= 2 && !s.flags.ai_pitched && !s.flags.ai_started,
+                    title: "🤖 Nouveau Projet : Intégrer l'IA",
+                    desc: "Le CTO propose de lancer un projet de recherche sur l'IA sur plusieurs semaines. Coût initial élevé.",
                     options: [
-                        { text: "Transparence totale (Coût RP: 5000€)", effect: (s) => { s.money -= 5000; s.brand -= 5; s.morale += 5; } },
-                        { text: "Étouffer l'affaire (Risque légal)", effect: (s) => { s.brand -= 15; s.morale -= 10; } }
+                        { text: "Lancer le projet (-10 000€)", effect: (s) => { s.money -= 10000; s.flags.ai_started = true; s.flags.ai_pitched = true; } },
+                        { text: "Trop risqué, on oublie", effect: (s) => { s.flags.ai_pitched = true; } }
                     ]
                 },
                 {
-                    id: "competitor_ad",
-                    title: "🥊 Campagne Agressive d'un Concurrent",
-                    desc: "Un concurrent direct attaque votre produit sur les réseaux sociaux. Quelle est notre riposte ?",
+                    id: "ai_2_progress",
+                    condition: (s) => s.flags.ai_started && !s.flags.ai_finished && Math.random() > 0.5,
+                    title: "🤖 Point d'étape : Projet IA",
+                    desc: "L'équipe IA a besoin d'une rallonge budgétaire pour acheter des données d'entraînement.",
                     options: [
-                        { text: "Contre-attaque juridique (-8000€)", effect: (s) => { s.money -= 8000; s.brand += 5; } },
-                        { text: "Baisse de prix promotionnelle (Diminue la marge)", effect: (s) => { /* Sera géré dans le P&L via l'input utilisateur, on met juste un bonus marque */ s.brand += 10; } },
-                        { text: "Ignorer", effect: (s) => { s.brand -= 10; } }
+                        { text: "Financer la data (-5 000€)", effect: (s) => { s.money -= 5000; s.flags.ai_finished = true; } },
+                        { text: "Faire avec des données gratuites (-Moral)", effect: (s) => { s.morale -= 10; s.flags.ai_finished = true; } }
                     ]
                 },
                 {
-                    id: "team_burnout",
-                    title: " خ Fatigue des Équipes",
-                    desc: "L'équipe de développement menace de faire grève à cause de la charge de travail.",
+                    id: "ai_3_launch",
+                    condition: (s) => s.flags.ai_finished && !s.flags.ai_launched,
+                    title: "🚀 Lancement de l'IA !",
+                    desc: "Le module IA est prêt. Comment le monétiser ?",
                     options: [
-                        { text: "Prime exceptionnelle (-10000€)", effect: (s) => { s.money -= 10000; s.morale += 20; } },
-                        { text: "Séminaire Team Building (-3000€)", effect: (s) => { s.money -= 3000; s.morale += 10; } },
-                        { text: "Mettre la pression", effect: (s) => { s.morale -= 20; s.quality -= 5; } }
+                        { text: "L'offrir à tous (+Gros boost Marque)", effect: (s) => { s.brand += 15; s.quality += 10; s.flags.ai_launched = true; } },
+                        { text: "Option payante (+Boost Qualité uniquement)", effect: (s) => { s.quality += 20; s.flags.ai_launched = true; s.flags.ai_paid = true; } }
+                    ]
+                },
+
+                // --- ARC NARRATIF 2 : LE CONCURRENT ---
+                {
+                    id: "rival_1",
+                    condition: (s) => s.users > 1000 && !s.flags.rival_exists,
+                    title: "🥊 Menace : Un clone apparaît",
+                    desc: "Une startup nommée 'CopyCat' vient de lancer exactement le même produit que nous, mais moins cher.",
+                    options: [
+                        { text: "Les attaquer en justice (-8 000€)", effect: (s) => { s.money -= 8000; s.flags.rival_exists = true; s.flags.rival_sued = true; } },
+                        { text: "Ignorer et avancer", effect: (s) => { s.brand -= 5; s.flags.rival_exists = true; } }
                     ]
                 },
                 {
-                    id: "new_feature",
-                    title: "🚀 Choix de la Roadmap",
-                    desc: "Sur quelle fonctionnalité l'équipe R&D doit-elle se concentrer ce trimestre ?",
+                    id: "rival_2_lawsuit",
+                    condition: (s) => s.flags.rival_sued && !s.flags.rival_defeated && Math.random() > 0.6,
+                    title: "⚖️ Verdict du procès CopyCat",
+                    desc: "Le juge a rendu sa décision concernant notre plainte pour plagiat.",
                     options: [
-                        { text: "Refonte de l'interface (+Image de marque)", effect: (s) => { s.brand += 8; } },
-                        { text: "Optimisation du code (+Qualité, -Coût serveur)", effect: (s) => { s.quality += 10; s.baseCostPerUser = Math.max(5, s.baseCostPerUser - 1); } }
+                        { text: "Lire le verdict", effect: (s) => { 
+                            if(Math.random() > 0.5) { s.money += 20000; s.brand += 10; s.flags.rival_defeated = true; } // Gagné
+                            else { s.brand -= 10; s.flags.rival_defeated = true; } // Perdu
+                        }}
+                    ]
+                },
+
+                // --- ÉVÉNEMENTS GÉNÉRIQUES (Pour toujours avoir 5 choix minimum) ---
+                {
+                    id: "gen_bug", condition: (s) => true,
+                    title: "🐛 Bug Critique signalé",
+                    desc: "Un bug empêche certains utilisateurs de se connecter. Qui s'en occupe ?",
+                    options: [
+                        { text: "L'équipe principale (-Vitesse R&D)", effect: (s) => { s.quality -= 2; } },
+                        { text: "Payer un freelance (-1 500€)", effect: (s) => { s.money -= 1500; } }
+                    ]
+                },
+                {
+                    id: "gen_team", condition: (s) => true,
+                    title: "🍕 Vie d'équipe",
+                    desc: "C'est la fin du mois, faut-il organiser un événement pour l'équipe ?",
+                    options: [
+                        { text: "Soirée Pizza (-500€, +Moral)", effect: (s) => { s.money -= 500; s.morale += 5; } },
+                        { text: "Rien de spécial", effect: (s) => { s.morale -= 2; } }
+                    ]
+                },
+                {
+                    id: "gen_ad", condition: (s) => true,
+                    title: "📱 Opportunité Influenceur",
+                    desc: "Un influenceur tech propose de parler de nous.",
+                    options: [
+                        { text: "Payer le post (-3 000€, +Marque)", effect: (s) => { s.money -= 3000; s.brand += 5; } },
+                        { text: "Refuser", effect: (s) => {} }
+                    ]
+                },
+                {
+                    id: "gen_server", condition: (s) => true,
+                    title: "💾 Maintenance Base de données",
+                    desc: "Les serveurs rament un peu avec les nouveaux utilisateurs.",
+                    options: [
+                        { text: "Optimiser le code (Prend du temps)", effect: (s) => { s.quality -= 1; } },
+                        { text: "Ignorer (Baisse légère de marque)", effect: (s) => { s.brand -= 2; } }
+                    ]
+                },
+                {
+                    id: "gen_feature", condition: (s) => true,
+                    title: "✨ Mini-Feature",
+                    desc: "Un dev a codé un 'Mode Sombre' sur son temps libre. On le déploie ?",
+                    options: [
+                        { text: "Oui (+Qualité)", effect: (s) => { s.quality += 2; } },
+                        { text: "Non, ça peut créer des bugs", effect: (s) => {} }
                     ]
                 }
             ],
 
-            activeScenarios: [],
-            scenarioChoices: {}, // Stocke les choix faits par le joueur { "data_leak": 0 }
+            activeEvents: [],
+            eventChoices: {}, // { "ai_1_pitch": 0 }
 
-            // Initialisation
             init() {
-                const saved = localStorage.getItem('siliconSim_v4');
-                if(saved) {
-                    this.state = JSON.parse(saved);
-                }
-                this.generateScenarios();
+                const saved = localStorage.getItem('siliconSim_v5');
+                if(saved) this.state = JSON.parse(saved);
+                this.generateEvents();
                 this.updateUI();
             },
 
-            // Tire des scénarios aléatoires pour ce tour
-            generateScenarios() {
-                // On mélange et on en prend 2
-                const shuffled = [...this.allScenarios].sort(() => 0.5 - Math.random());
-                this.activeScenarios = shuffled.slice(0, 2);
-                this.scenarioChoices = {};
+            // Tire 5 événements pertinents selon l'état actuel (Conditions)
+            generateEvents() {
+                // 1. Filtrer ceux qui remplissent les conditions
+                let eligible = this.eventPool.filter(e => e.condition(this.state));
+                // 2. Mélanger
+                eligible = eligible.sort(() => 0.5 - Math.random());
+                // 3. Garder les 5 premiers
+                this.activeEvents = eligible.slice(0, 5);
                 
-                // On sélectionne le premier choix par défaut pour chaque scénario
-                this.activeScenarios.forEach(scen => {
-                    this.scenarioChoices[scen.id] = 0; 
-                });
+                this.eventChoices = {};
+                this.activeEvents.forEach(e => { this.eventChoices[e.id] = 0; });
             },
 
-            // Le Moteur Mathématique (Quand on clique sur Valider)
-            simulateTurn() {
+            simulateWeek() {
                 if(this.state.isGameOver) return;
 
-                // 1. Récupération des Inputs Joueur
-                const price = parseFloat(document.getElementById('input-price').value) || 29;
-                const marketing = parseFloat(document.getElementById('input-marketing').value) || 0;
-                const rnd = parseFloat(document.getElementById('input-rnd').value) || 0;
-                const hrPolicy = parseInt(document.getElementById('input-hr-slider').value) || 3;
+                // --- 1. LECTURE DES 5 INPUTS DU SOCLE COMMUN ---
+                const price = parseFloat(document.getElementById('in-price').value) || 0;
+                const marketing = parseFloat(document.getElementById('in-marketing').value) || 0;
+                const rnd = parseFloat(document.getElementById('in-rnd').value) || 0;
+                const servers = parseFloat(document.getElementById('in-servers').value) || 0;
+                const hrPolicy = parseInt(document.getElementById('in-hr').value) || 3;
 
-                // Vérif Trésorerie
-                const totalExpenses = marketing + rnd;
-                if(totalExpenses > this.state.money) {
-                    alert("Trésorerie insuffisante pour valider ces budgets (Marketing + R&D) !");
-                    return;
-                }
+                const fixedCosts = marketing + rnd + servers;
+                if(this.state.money < fixedCosts) { alert("Trésorerie insuffisante pour vos budgets hebdo !"); return; }
+                this.state.money -= fixedCosts;
 
-                // 2. Application des Choix des Scénarios
-                this.activeScenarios.forEach(scen => {
-                    const choiceIndex = this.scenarioChoices[scen.id];
-                    scen.options[choiceIndex].effect(this.state);
+                // --- 2. RÉSOLUTION DES 5 CAS DYNAMIQUES ---
+                this.activeEvents.forEach(event => {
+                    const choiceIndex = this.eventChoices[event.id];
+                    event.options[choiceIndex].effect(this.state);
                 });
 
-                // 3. Calculs Systémiques (L'économie)
+                // --- 3. LE MOTEUR ÉCONOMIQUE (Impact des budgets) ---
                 
-                // A. Impact de la politique RH (1=Pression, 5=Bien-être)
-                if(hrPolicy === 1) { this.state.morale -= 10; this.state.quality += 5; } // Pression = baisse moral, mais produit sort vite
-                if(hrPolicy === 5) { this.state.morale += 10; this.state.quality -= 2; } // Bien-être = super moral, mais lenteur
+                // RH
+                if(hrPolicy <= 2) { this.state.morale -= 5; this.state.quality += 2; } // Pression
+                if(hrPolicy >= 4) { this.state.morale += 5; this.state.quality -= 1; } // Détente
 
-                // B. Impact des Budgets
-                this.state.money -= totalExpenses;
-                // Le marketing booste l'image de marque (Rendement décroissant : plus on en a, plus c'est dur de monter)
-                const brandBoost = (marketing / 1000) * (1 - (this.state.brand/100)); 
-                this.state.brand = Math.min(100, this.state.brand + brandBoost);
-                
-                // La R&D booste la qualité, mais dépend du moral (des devs tristes codent mal)
-                const rndEfficiency = this.state.morale / 100;
-                const qualityBoost = (rnd / 1000) * rndEfficiency;
-                this.state.quality = Math.min(100, this.state.quality + qualityBoost);
+                // R&D & Marque
+                this.state.quality += (rnd / 1000) * (this.state.morale / 100);
+                this.state.brand += (marketing / 1000) * (1 - (this.state.brand / 100));
 
-                // C. Calcul de la Demande (Le vrai marché)
-                // L'attractivité dépend de Qualité + Image, divisé par le Prix.
-                const attractiveness = (this.state.quality + this.state.brand) / 2;
+                // Calcul Utilisateurs (Acquisition - Désabonnement)
+                // L'attractivité dépend de Qualité + Marque. Si le prix est haut, l'attractivité chute.
+                const attractiveness = ((this.state.quality * 1.5) + this.state.brand) / Math.max(1, price * 0.5);
                 
-                // Formule de demande de base : si le prix est à 30€ et l'attractivité à 50, on vend X.
-                // Elasticité prix : un prix trop haut tue la demande de façon exponentielle.
-                const priceTolerance = attractiveness; // Un super produit tolère un prix élevé
-                let salesVolume = 0;
+                // Nouveaux inscrits grâce au marketing
+                const newUsers = Math.floor((marketing / 10) * (attractiveness / 50));
+                // Churn (Ceux qui partent si le produit est mauvais ou cher)
+                const churnRate = Math.max(0.01, 0.2 - (this.state.quality / 1000));
+                const lostUsers = Math.floor(this.state.users * churnRate);
                 
-                if (price <= priceTolerance * 2) {
-                    salesVolume = Math.floor( 1000 * (attractiveness / 50) * (50 / Math.max(1, price)) );
+                this.state.users = Math.max(0, this.state.users + newUsers - lostUsers);
+
+                // Crash Serveurs ? (Si on a trop d'utilisateurs par rapport au budget serveur)
+                const serverCap = servers * 10; // 500€ = 5000 users supportés
+                let crashPenalty = 0;
+                if(this.state.users > serverCap) {
+                    this.state.brand -= 5; // Punition
+                    crashPenalty = (this.state.users - serverCap) * 0.1; // Surtaxe cloud d'urgence
+                    this.state.money -= crashPenalty;
                 }
-                
-                // Boost direct du marketing sur les ventes immédiates
-                salesVolume += Math.floor(marketing / 50);
 
-                // D. P&L (Profits & Pertes)
-                const revenue = salesVolume * price;
-                const cogs = salesVolume * this.state.baseCostPerUser; // Coût des serveurs
-                const fixedCosts = 5000; // Locaux, salaires fixes de base
-                
-                const totalCosts = cogs + fixedCosts;
-                const profit = revenue - totalCosts; // Attention, R&D et Marketing ont déjà été déduits de la trésorerie !
-                
-                // Bilan financier final
-                this.state.money += profit;
+                // --- 4. RENTRÉES D'ARGENT ---
+                // Le prix est mensuel. Sur une semaine, on encaisse 1/4 du revenu.
+                const weeklyRevenue = (this.state.users * price) / 4;
+                this.state.money += weeklyRevenue;
 
-                // 4. Génération du Rapport
+                // --- 5. BILAN ET FIN ---
                 this.state.lastReport = {
-                    sales: salesVolume,
-                    price: price,
-                    revenue: revenue,
-                    cogs: cogs,
-                    fixed: fixedCosts,
-                    marketing: marketing,
-                    rnd: rnd,
-                    profit: profit - (marketing + rnd) // Vrai résultat net
+                    rev: weeklyRevenue,
+                    costs: fixedCosts + crashPenalty,
+                    profit: weeklyRevenue - (fixedCosts + crashPenalty),
+                    newU: newUsers,
+                    lostU: lostUsers
                 };
 
-                // 5. Fin du tour
                 this.state.turn++;
-                
-                // Bridage des KPIs (0 à 100)
-                this.state.brand = Math.max(0, Math.min(100, this.state.brand));
-                this.state.quality = Math.max(0, Math.min(100, this.state.quality));
-                this.state.morale = Math.max(0, Math.min(100, this.state.morale));
-
-                if(this.state.money < 0) {
-                    this.state.isGameOver = true;
-                }
+                // Bridage 0-100
+                ['brand', 'quality', 'morale'].forEach(k => this.state[k] = Math.max(0, Math.min(100, this.state[k])));
+                if(this.state.money < 0) this.state.isGameOver = true;
 
                 this.saveGame();
-                this.generateScenarios();
+                this.generateEvents();
                 this.updateUI();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             },
 
-            // Interface
+            // --- INTERFACE ---
             updateUI() {
-                const fEUR = (n) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
-                
-                // KPIs
-                document.getElementById('turn-display').innerText = "Trimestre " + this.state.turn;
-                document.getElementById('kpi-money').innerText = fEUR(this.state.money);
-                document.getElementById('kpi-money').className = `text-2xl font-black ${this.state.money < 10000 ? 'text-red-500' : 'text-slate-800'}`;
-                
-                document.getElementById('kpi-brand').innerText = Math.floor(this.state.brand);
-                document.getElementById('kpi-quality').innerText = Math.floor(this.state.quality);
-                
-                const m = this.state.morale;
-                document.getElementById('kpi-morale').innerText = Math.floor(m);
-                document.getElementById('kpi-morale').className = `text-2xl font-black ${m < 40 ? 'text-red-500' : (m > 70 ? 'text-emerald-500' : 'text-slate-800')}`;
+                const fE = (n) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+                const fN = (n) => new Intl.NumberFormat('fr-FR').format(Math.floor(n));
 
-                // Génération HTML des Scénarios
-                const scenContainer = document.getElementById('scenarios-container');
-                scenContainer.innerHTML = '';
-                this.activeScenarios.forEach(scen => {
-                    let html = `<div class="p-4 border border-slate-200 rounded-lg bg-white shadow-sm">
-                        <h3 class="font-bold text-slate-800 mb-1">${scen.title}</h3>
-                        <p class="text-sm text-slate-600 mb-4">${scen.desc}</p>
-                        <div class="space-y-2">`;
+                document.getElementById('ui-turn').innerText = "Semaine " + this.state.turn;
+                document.getElementById('ui-money').innerText = fE(this.state.money);
+                document.getElementById('ui-users').innerText = fN(this.state.users);
+                document.getElementById('ui-brand').innerText = Math.floor(this.state.brand);
+                document.getElementById('ui-quality').innerText = Math.floor(this.state.quality);
+                document.getElementById('ui-morale').innerText = Math.floor(this.state.morale);
+
+                // Rendu des 5 Événements
+                const container = document.getElementById('events-container');
+                container.innerHTML = '';
+                this.activeEvents.forEach(e => {
+                    let html = `<div class="p-4 bg-slate-800 rounded-lg border border-slate-700">
+                        <p class="font-bold text-white mb-1">${e.title}</p>
+                        <p class="text-xs text-slate-400 mb-3">${e.desc}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">`;
                     
-                    scen.options.forEach((opt, idx) => {
-                        const isSelected = this.scenarioChoices[scen.id] === idx;
-                        html += `<label class="flex items-center p-3 border rounded-lg cursor-pointer transition-colors ${isSelected ? 'border-indigo-500 bg-indigo-50/50' : 'border-slate-200 hover:bg-slate-50'}">
-                            <input type="radio" name="${scen.id}" value="${idx}" ${isSelected ? 'checked' : ''} onchange="game.selectScenarioOption('${scen.id}', ${idx})" class="w-4 h-4 text-indigo-600 focus:ring-indigo-500 border-gray-300">
-                            <span class="ml-3 text-sm font-medium text-slate-700">${opt.text}</span>
+                    e.options.forEach((opt, idx) => {
+                        const checked = this.eventChoices[e.id] === idx ? 'checked' : '';
+                        html += `
+                        <label class="relative cursor-pointer">
+                            <input type="radio" name="${e.id}" class="peer sr-only event-radio" ${checked} onchange="game.selectOption('${e.id}', ${idx})">
+                            <div class="p-3 text-xs font-medium text-slate-300 border border-slate-600 rounded-lg hover:bg-slate-700 transition">
+                                ${opt.text}
+                            </div>
                         </label>`;
                     });
                     html += `</div></div>`;
-                    scenContainer.innerHTML += html;
+                    container.innerHTML += html;
                 });
 
-                // Génération du Rapport Financier
+                // Rendu des Tags (Mémoire)
+                const flagsDiv = document.getElementById('ui-flags');
+                flagsDiv.innerHTML = '';
+                const flagNames = Object.keys(this.state.flags);
+                if(flagNames.length === 0) {
+                    flagsDiv.innerHTML = `<span class="text-slate-500 italic">Aucun projet à long terme actif.</span>`;
+                } else {
+                    flagNames.forEach(f => {
+                        // Traduction des tags techniques en texte lisible
+                        const labels = { ai_started: "R&D Intelligence Artificielle", ai_launched: "IA Déployée", rival_exists: "Guerre Concurrentielle", rival_sued: "Procès en cours" };
+                        if(labels[f]) flagsDiv.innerHTML += `<span class="bg-indigo-900 text-indigo-300 border border-indigo-700 px-2 py-1 rounded">${labels[f]}</span>`;
+                    });
+                }
+
+                // Rapport
                 if(this.state.lastReport) {
                     const r = this.state.lastReport;
-                    document.getElementById('report-turn').innerText = this.state.turn - 1;
-                    document.getElementById('report-content').innerHTML = `
-                        <div class="flex justify-between text-slate-300 mb-1"><span>Abonnements vendus:</span> <b>${r.sales}</b></div>
-                        <div class="flex justify-between text-slate-300 mb-4"><span>Prix unitaire:</span> <b>${r.price}€</b></div>
-                        
-                        <div class="flex justify-between text-emerald-400 font-bold border-t border-slate-700 pt-2 mb-1"><span>Chiffre d'Affaires:</span> <span>+${fEUR(r.revenue)}</span></div>
-                        
-                        <div class="flex justify-between text-red-400 mb-1"><span>Coûts de prod (Serveurs):</span> <span>-${fEUR(r.cogs)}</span></div>
-                        <div class="flex justify-between text-red-400 mb-1"><span>Frais fixes (Salaires/Loyer):</span> <span>-${fEUR(r.fixed)}</span></div>
-                        <div class="flex justify-between text-red-400 mb-1"><span>Dépenses Marketing:</span> <span>-${fEUR(r.marketing)}</span></div>
-                        <div class="flex justify-between text-red-400 mb-4"><span>Dépenses R&D:</span> <span>-${fEUR(r.rnd)}</span></div>
-                        
-                        <div class="flex justify-between font-black text-lg border-t border-slate-700 pt-3 ${r.profit >= 0 ? 'text-emerald-400' : 'text-red-500'}">
-                            <span>RÉSULTAT NET:</span> <span>${r.profit >= 0 ? '+' : ''}${fEUR(r.profit)}</span>
+                    document.getElementById('ui-report-turn').innerText = this.state.turn - 1;
+                    document.getElementById('ui-report').innerHTML = `
+                        <div class="flex justify-between"><span>Abonnements Hebdo:</span> <span class="text-emerald-400">+${fE(r.rev)}</span></div>
+                        <div class="flex justify-between"><span>Budgets & Frais:</span> <span class="text-red-400">-${fE(r.costs)}</span></div>
+                        <div class="flex justify-between pt-2 border-t border-slate-700 text-sm font-bold ${r.profit >= 0 ? 'text-emerald-400' : 'text-red-400'}">
+                            <span>RÉSULTAT NET:</span> <span>${r.profit >= 0 ? '+' : ''}${fE(r.profit)}</span>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-slate-700 text-[10px] text-slate-500">
+                            <div>Acquisition: +${fN(r.newU)} users</div>
+                            <div>Désabonnements: -${fN(r.lostU)} users</div>
                         </div>
                     `;
                 }
 
-                if(this.state.isGameOver) {
-                    document.getElementById('game-over').classList.remove('hidden');
-                }
+                if(this.state.isGameOver) document.getElementById('game-over').classList.remove('hidden');
             },
 
-            selectScenarioOption(scenarioId, optionIndex) {
-                this.scenarioChoices[scenarioId] = optionIndex;
-                this.updateUI(); // Met à jour le visuel de sélection
+            selectOption(eventId, choiceIndex) {
+                this.eventChoices[eventId] = choiceIndex;
+                this.updateUI();
             },
 
-            saveGame() { localStorage.setItem('siliconSim_v4', JSON.stringify(this.state)); },
-            resetGame() { if(confirm("Recommencer une simulation depuis le début ?")) { localStorage.removeItem('siliconSim_v4'); location.reload(); } }
+            saveGame() { localStorage.setItem('siliconSim_v5', JSON.stringify(this.state)); },
+            resetGame() { if(confirm("Recommencer à zéro ?")) { localStorage.removeItem('siliconSim_v5'); location.reload(); } }
         };
 
-        window.onload = () => { game.init(); };
+        window.onload = () => game.init();
     </script>
 </body>
 </html>
