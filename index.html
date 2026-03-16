@@ -3,168 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silicon Venture | Business Sim</title>
+    <title>Silicon Venture | V2.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #f8fafc; }
         .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); }
         .action-btn { transition: all 0.2s ease-in-out; }
-        .action-btn:hover { transform: translateY(-2px); background: rgba(51, 65, 85, 0.9); }
+        .action-btn:hover:not(:disabled) { transform: translateY(-2px); background: rgba(51, 65, 85, 0.9); border-color: rgba(255,255,255,0.2); }
+        .action-btn:disabled { opacity: 0.5; cursor: not-allowed; }
     </style>
 </head>
 <body class="p-4 md:p-8 min-h-screen flex items-center justify-center">
 
     <div class="max-w-5xl w-full mx-auto">
+        <div class="flex justify-between items-end mb-4">
+            <h1 class="text-2xl font-black text-white tracking-tight">SILICON VENTURE <span class="text-sm font-normal text-slate-400">v2.0</span></h1>
+            <p id="turn" class="text-xl font-bold text-indigo-400">Semaine 1</p>
+        </div>
+
         <header class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div class="glass p-5 rounded-2xl text-center shadow-lg">
-                <p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-1">Trésorerie</p>
-                <p id="money" class="text-2xl md:text-3xl font-bold text-emerald-400">10 000 €</p>
+            <div class="glass p-4 rounded-2xl shadow-lg border-t-4 border-t-emerald-500">
+                <p class="text-slate-400 text-xs uppercase font-semibold mb-1">Trésorerie</p>
+                <p id="money" class="text-2xl font-bold text-white">10 000 €</p>
             </div>
-            <div class="glass p-5 rounded-2xl text-center shadow-lg">
-                <p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-1">Réputation</p>
-                <p id="reputation" class="text-2xl md:text-3xl font-bold text-sky-400">0</p>
+            <div class="glass p-4 rounded-2xl shadow-lg border-t-4 border-t-sky-500">
+                <p class="text-slate-400 text-xs uppercase font-semibold mb-1">Produit & Rép.</p>
+                <p class="text-lg font-bold text-white">V.<span id="productLevel">1.0</span> | Rép: <span id="reputation" class="text-sky-400">10</span></p>
             </div>
-            <div class="glass p-5 rounded-2xl text-center shadow-lg">
-                <p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-1">Équipe</p>
-                <p id="staff" class="text-2xl md:text-3xl font-bold text-violet-400">1</p>
+            <div class="glass p-4 rounded-2xl shadow-lg border-t-4 border-t-violet-500">
+                <p class="text-slate-400 text-xs uppercase font-semibold mb-1">Équipe (<span id="totalStaff">1</span>/<span id="maxStaff">3</span>)</p>
+                <p class="text-sm font-bold text-white"><span id="devs" class="text-violet-400">1</span> Dev(s) | <span id="sales" class="text-amber-400">0</span> Com.</p>
             </div>
-            <div class="glass p-5 rounded-2xl text-center shadow-lg">
-                <p class="text-slate-400 text-xs uppercase tracking-widest font-semibold mb-1">Semaine</p>
-                <p id="turn" class="text-2xl md:text-3xl font-bold text-white">1</p>
+            <div class="glass p-4 rounded-2xl shadow-lg border-t-4 border-t-orange-500">
+                <p class="text-slate-400 text-xs uppercase font-semibold mb-1">Locaux</p>
+                <p id="officeName" class="text-lg font-bold text-white">Garage</p>
+                <p id="rentCost" class="text-xs text-slate-400">Loyer: 0 €/sem</p>
             </div>
         </header>
 
         <main class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <section class="md:col-span-2 space-y-6">
                 <div class="flex justify-between items-center">
-                    <h2 class="text-xl font-bold">Décisions Stratégiques</h2>
-                    <button onclick="game.resetGame()" class="text-xs text-red-400 hover:text-red-300 transition uppercase tracking-widest">Recommencer à zéro</button>
+                    <h2 class="text-xl font-bold">Ressources Humaines & Opérations</h2>
+                    <button onclick="game.resetGame()" class="text-xs text-red-400 hover:text-red-300 underline">Réinitialiser la partie</button>
                 </div>
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <button onclick="game.doAction('hire')" class="glass action-btn p-5 rounded-xl text-left group">
-                        <span class="block font-bold text-lg group-hover:text-emerald-400 transition">Recruter un Talent</span>
-                        <span class="text-sm text-slate-400">-1 500 € (Salaire à payer ensuite)</span>
+                    <button id="btn-dev" onclick="game.doAction('hireDev')" class="glass action-btn p-4 rounded-xl text-left">
+                        <span class="block font-bold text-violet-400">Recruter un Développeur</span>
+                        <span class="text-xs text-slate-400">Coût: 1500€ | Salaire: 1000€/s</span>
                     </button>
 
-                    <button onclick="game.doAction('marketing')" class="glass action-btn p-5 rounded-xl text-left group">
-                        <span class="block font-bold text-lg group-hover:text-sky-400 transition">Campagne Pub</span>
-                        <span class="text-sm text-slate-400">-2 000 € / +15 Réputation</span>
+                    <button id="btn-sales" onclick="game.doAction('hireSales')" class="glass action-btn p-4 rounded-xl text-left">
+                        <span class="block font-bold text-amber-400">Recruter un Commercial</span>
+                        <span class="text-xs text-slate-400">Coût: 1200€ | Salaire: 800€/s</span>
                     </button>
 
-                    <button onclick="game.doAction('research')" class="glass action-btn p-5 rounded-xl text-left group">
-                        <span class="block font-bold text-lg group-hover:text-amber-400 transition">R&D Produit</span>
-                        <span class="text-sm text-slate-400">-1 000 € / Améliore les ventes</span>
+                    <button onclick="game.doAction('marketing')" class="glass action-btn p-4 rounded-xl text-left">
+                        <span class="block font-bold text-sky-400">Campagne Marketing</span>
+                        <span class="text-xs text-slate-400">Coût: 2000€ | +15 Réputation</span>
                     </button>
 
-                    <button onclick="game.nextTurn()" class="bg-indigo-600 p-5 rounded-xl hover:bg-indigo-500 hover:scale-[1.02] active:scale-95 transition text-center font-bold text-lg shadow-xl shadow-indigo-500/20">
-                        Passer à la Semaine Suivante ➔
+                    <button id="btn-office" onclick="game.doAction('upgradeOffice')" class="glass action-btn p-4 rounded-xl text-left border-orange-500/30">
+                        <span class="block font-bold text-orange-400">Améliorer les Locaux</span>
+                        <span id="officeUpgradeText" class="text-xs text-slate-400">Passer au Coworking (5000€)</span>
                     </button>
                 </div>
 
-                <div id="game-over" class="hidden bg-red-900/40 border border-red-500/50 p-8 rounded-2xl text-center backdrop-blur-md mt-4">
-                    <h2 class="text-3xl font-black text-red-500 mb-2">BANQUEROUTE !</h2>
-                    <p class="mb-6 text-slate-300">Votre trésorerie est dans le rouge. L'entreprise ferme ses portes.</p>
-                    <button onclick="game.resetGame()" class="bg-white text-black px-6 py-2 rounded-full font-bold uppercase text-sm hover:bg-slate-200 transition">Essayer une autre stratégie</button>
+                <button onclick="game.nextTurn()" class="w-full bg-indigo-600 p-4 rounded-xl hover:bg-indigo-500 active:scale-95 transition text-center font-bold text-lg shadow-lg">
+                    Terminer la Semaine ➔
+                </button>
+
+                <div id="game-over" class="hidden bg-red-900/40 border border-red-500 p-6 rounded-xl text-center">
+                    <h2 class="text-2xl font-black text-red-500">BANQUEROUTE</h2>
+                    <button onclick="game.resetGame()" class="mt-4 bg-white text-black px-6 py-2 rounded-full font-bold text-sm">Recommencer</button>
                 </div>
             </section>
 
             <section class="flex flex-col">
-                <h2 class="text-xl font-bold mb-4">Journal d'activité</h2>
-                <div id="logs" class="glass h-[400px] rounded-2xl p-5 overflow-y-auto text-sm space-y-3 flex flex-col-reverse shadow-inner">
-                    </div>
+                <h2 class="text-xl font-bold mb-4">Événements</h2>
+                <div id="logs" class="glass h-[350px] rounded-xl p-4 overflow-y-auto text-sm space-y-2 flex flex-col-reverse"></div>
             </section>
         </main>
     </div>
 
     <script>
         const game = {
+            // Variables de base
             money: 10000,
             reputation: 10,
-            staff: 1,
-            productLevel: 1,
+            productLevel: 1.0,
             turn: 1,
             isGameOver: false,
+            
+            // Nouvelles variables RH & Locaux
+            devs: 1,
+            sales: 0,
+            officeLevel: 1, // 1: Garage, 2: Coworking, 3: Bureaux
 
-            // --- SYSTÈME DE SAUVEGARDE ---
+            // Configuration des locaux
+            offices: {
+                1: { name: "Garage", maxStaff: 3, rent: 0, upgradeCost: 5000 },
+                2: { name: "Coworking", maxStaff: 10, rent: 800, upgradeCost: 25000 },
+                3: { name: "Bureaux Pro", maxStaff: 50, rent: 3500, upgradeCost: null }
+            },
+
+            // Méthodes utilitaires
+            getTotalStaff() { return this.devs + this.sales; },
+            getMaxStaff() { return this.offices[this.officeLevel].maxStaff; },
+            getRent() { return this.offices[this.officeLevel].rent; },
+
             saveGame() {
-                const state = {
-                    money: this.money,
-                    reputation: this.reputation,
-                    staff: this.staff,
-                    productLevel: this.productLevel,
-                    turn: this.turn,
-                    isGameOver: this.isGameOver
-                };
-                localStorage.setItem('siliconVenture_github_v1', JSON.stringify(state));
+                const state = { money: this.money, reputation: this.reputation, devs: this.devs, sales: this.sales, officeLevel: this.officeLevel, productLevel: this.productLevel, turn: this.turn, isGameOver: this.isGameOver };
+                localStorage.setItem('siliconVenture_v2', JSON.stringify(state));
             },
 
             loadGame() {
-                const saved = localStorage.getItem('siliconVenture_github_v1');
-                if (saved) {
-                    const state = JSON.parse(saved);
-                    Object.assign(this, state);
-                    this.log("💾 Partie chargée avec succès.", "success");
-                } else {
-                    this.log("🚀 Lancement de la startup. Essayez de survivre au premier mois !");
-                }
+                const saved = localStorage.getItem('siliconVenture_v2');
+                if (saved) { Object.assign(this, JSON.parse(saved)); this.log("💾 Partie chargée.", "info"); }
+                else { this.log("🚀 Lancement : Vous êtes seul dans votre garage avec une idée."); }
             },
 
             resetGame() {
-                if(confirm("Êtes-vous sûr de vouloir déclarer faillite et tout recommencer ?")) {
-                    localStorage.removeItem('siliconVenture_github_v1');
-                    location.reload();
-                }
+                if(confirm("Tout effacer ?")) { localStorage.removeItem('siliconVenture_v2'); location.reload(); }
             },
 
-            // --- AFFICHAGE ---
             updateUI() {
                 document.getElementById('money').innerText = new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(this.money);
                 document.getElementById('reputation').innerText = Math.floor(this.reputation);
-                document.getElementById('staff').innerText = this.staff;
-                document.getElementById('turn').innerText = this.turn;
+                document.getElementById('productLevel').innerText = this.productLevel.toFixed(1);
+                document.getElementById('turn').innerText = "Semaine " + this.turn;
                 
-                if(this.money < 0) {
-                    this.isGameOver = true;
-                    document.getElementById('game-over').classList.remove('hidden');
+                // Maj RH
+                document.getElementById('devs').innerText = this.devs;
+                document.getElementById('sales').innerText = this.sales;
+                document.getElementById('totalStaff').innerText = this.getTotalStaff();
+                document.getElementById('maxStaff').innerText = this.getMaxStaff();
+                
+                // Maj Locaux
+                document.getElementById('officeName').innerText = this.offices[this.officeLevel].name;
+                document.getElementById('rentCost').innerText = `Loyer: ${this.getRent()} €/sem`;
+
+                // Griser les boutons si capacité max atteinte
+                const isFull = this.getTotalStaff() >= this.getMaxStaff();
+                document.getElementById('btn-dev').disabled = isFull;
+                document.getElementById('btn-sales').disabled = isFull;
+
+                // Griser bouton locaux si max
+                if(this.officeLevel >= 3) {
+                    document.getElementById('btn-office').disabled = true;
+                    document.getElementById('officeUpgradeText').innerText = "Locaux maximums atteints";
+                } else {
+                    document.getElementById('officeUpgradeText').innerText = `Passer niveau sup. (${this.offices[this.officeLevel].upgradeCost}€)`;
                 }
-                this.saveGame(); // Sauvegarde automatique à chaque changement
+                
+                if(this.money < 0) { this.isGameOver = true; document.getElementById('game-over').classList.remove('hidden'); }
+                this.saveGame();
             },
 
             log(message, type = 'info') {
-                const logsDiv = document.getElementById('logs');
                 const colors = { info: 'text-slate-300', success: 'text-emerald-400', danger: 'text-red-400', warning: 'text-amber-400' };
-                const entry = `<div class="pb-2 border-b border-white/5 ${colors[type]}"><span class="text-[10px] opacity-50 mr-2">SEM ${this.turn}</span> ${message}</div>`;
-                logsDiv.innerHTML += entry;
+                document.getElementById('logs').innerHTML += `<div class="pb-2 border-b border-white/5 ${colors[type]}"><span class="text-[10px] opacity-50 mr-2">S${this.turn}</span> ${message}</div>`;
             },
 
-            // --- MÉCANIQUES DE JEU ---
             doAction(action) {
                 if(this.isGameOver) return;
 
-                switch(action) {
-                    case 'hire':
-                        if(this.money >= 1500) {
-                            this.staff++;
-                            this.money -= 1500;
-                            this.log("👤 Un nouveau développeur a rejoint l'équipe.", "success");
-                        } else { this.log("❌ Fonds insuffisants pour recruter !", "danger"); }
-                        break;
-                    case 'marketing':
-                        if(this.money >= 2000) {
-                            this.money -= 2000;
-                            this.reputation += 15;
-                            this.log("📈 La campagne marketing fait parler de vous.", "success");
-                        } else { this.log("❌ Fonds insuffisants pour la pub !", "danger"); }
-                        break;
-                    case 'research':
-                        if(this.money >= 1000) {
-                            this.money -= 1000;
-                            this.productLevel += 0.5;
-                            this.log("🔬 Votre produit gagne en qualité.", "success");
-                        } else { this.log("❌ Fonds insuffisants pour la R&D !", "danger"); }
-                        break;
+                if(action === 'hireDev') {
+                    if(this.getTotalStaff() >= this.getMaxStaff()) return this.log("❌ Plus de place dans les locaux !", "danger");
+                    if(this.money >= 1500) { this.devs++; this.money -= 1500; this.log("👨‍💻 Nouveau Dev recruté.", "success"); } 
+                    else this.log("❌ Fonds insuffisants.", "danger");
+                }
+                else if(action === 'hireSales') {
+                    if(this.getTotalStaff() >= this.getMaxStaff()) return this.log("❌ Plus de place dans les locaux !", "danger");
+                    if(this.money >= 1200) { this.sales++; this.money -= 1200; this.log("🤝 Nouveau Commercial recruté.", "success"); } 
+                    else this.log("❌ Fonds insuffisants.", "danger");
+                }
+                else if(action === 'marketing') {
+                    if(this.money >= 2000) { this.money -= 2000; this.reputation += 15; this.log("📈 Campagne pub lancée.", "success"); } 
+                    else this.log("❌ Fonds insuffisants.", "danger");
+                }
+                else if(action === 'upgradeOffice') {
+                    const cost = this.offices[this.officeLevel].upgradeCost;
+                    if(cost && this.money >= cost) {
+                        this.money -= cost;
+                        this.officeLevel++;
+                        this.log(`🏢 Déménagement dans : ${this.offices[this.officeLevel].name} !`, "success");
+                    } else this.log("❌ Impossible de déménager.", "danger");
                 }
                 this.updateUI();
             },
@@ -172,37 +198,32 @@
             nextTurn() {
                 if(this.isGameOver) return;
 
-                // 1. Payer les salaires
-                const costs = this.staff * 900;
+                // R&D Automatique : Les devs améliorent le produit à chaque tour
+                const devBoost = (this.devs * 0.1);
+                this.productLevel += devBoost;
+
+                // Salaires et Loyer
+                const salaries = (this.devs * 1000) + (this.sales * 800);
+                const rent = this.getRent();
+                const totalCosts = salaries + rent;
                 
-                // 2. Encaisser les ventes (Formule basée sur l'équipe, la réputation et la qualité)
-                const revenue = (this.staff * 600) + (this.reputation * 180) * (this.productLevel * 0.9);
+                // Revenus : dépendent des commerciaux, de la réputation et du produit
+                // (Même sans commercial, le produit se vend un peu de lui-même)
+                const baseSales = (this.reputation * 50) * this.productLevel;
+                const salesBoost = 1 + (this.sales * 0.5); // Chaque commercial booste les ventes de 50%
+                const revenue = baseSales * salesBoost;
                 
-                // 3. Bilan
-                const profit = revenue - costs;
+                const profit = revenue - totalCosts;
                 this.money += profit;
 
-                // 4. Événements aléatoires
-                const rand = Math.random();
-                if(rand > 0.85) {
-                    this.money -= 2500;
-                    this.log("⚠️ Panne de serveurs ! Coûts de réparation : 2500€", "danger");
-                } else if(rand < 0.1) {
-                    this.reputation += 20;
-                    this.log("🌟 Un grand journal a écrit un article sur vous ! +20 Rép", "success");
-                }
-
                 this.turn++;
-                this.log(`📊 Bilan S${this.turn-1} : ${profit >= 0 ? '+' : ''}${Math.floor(profit)}€ (Revenus: ${Math.floor(revenue)}€ / Salaires: -${costs}€)`, profit >= 0 ? "success" : "warning");
+                this.log(`📊 Bilan : ${profit >= 0 ? '+' : ''}${Math.floor(profit)}€ (Ventes: ${Math.floor(revenue)}€ | Frais: -${totalCosts}€)`, profit >= 0 ? "success" : "warning");
+                
                 this.updateUI();
             }
         };
 
-        // Lancement au chargement de la page
-        window.onload = () => {
-            game.loadGame();
-            game.updateUI();
-        };
+        window.onload = () => { game.loadGame(); game.updateUI(); };
     </script>
 </body>
 </html>
