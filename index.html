@@ -3,137 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Silicon Venture | V5.0 Narrative Engine</title>
+    <title>Oceanic Executive | Cruise Line Simulator</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0f172a; color: #f8fafc; }
-        .glass-panel { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255,255,255,0.05); border-radius: 1rem; }
-        .input-dark { background: #1e293b; border: 1px solid #334155; color: white; padding: 0.5rem; border-radius: 0.5rem; width: 100%; outline: none; }
-        .input-dark:focus { border-color: #6366f1; }
-        input[type=range] { accent-color: #6366f1; }
-        .event-radio:checked + div { border-color: #6366f1; background-color: rgba(99, 102, 241, 0.1); }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+        .card { background: white; border: 1px solid #e2e8f0; border-radius: 0.5rem; box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); }
+        .input-pro { width: 100%; padding: 0.5rem; border: 1px solid #cbd5e1; border-radius: 0.25rem; font-family: 'Inter', monospace; font-size: 0.875rem; outline: none; transition: all 0.2s; }
+        .input-pro:focus { border-color: #0284c7; box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2); }
+        .data-table { width: 100%; text-align: left; border-collapse: collapse; font-size: 0.75rem; }
+        .data-table th { border-bottom: 2px solid #cbd5e1; padding: 0.5rem 0; color: #475569; text-transform: uppercase; }
+        .data-table td { padding: 0.5rem 0; border-bottom: 1px solid #e2e8f0; }
+        .data-table .val { text-align: right; font-family: monospace; font-weight: 600; }
+        .negative { color: #dc2626; }
+        .positive { color: #16a34a; }
+        /* Scrollbar pro */
+        ::-webkit-scrollbar { width: 6px; } ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
     </style>
 </head>
-<body class="p-4 md:p-6 min-h-screen">
+<body class="p-4 md:p-6 min-h-screen flex flex-col">
 
-    <div class="max-w-7xl mx-auto">
+    <div class="max-w-7xl mx-auto w-full flex-1 flex flex-col">
         
-        <header class="flex flex-wrap justify-between items-end mb-6 pb-4 border-b border-slate-800 gap-4">
+        <header class="flex justify-between items-end mb-6 pb-4 border-b-2 border-slate-800">
             <div>
-                <h1 class="text-3xl font-extrabold text-white tracking-tight">SILICON VENTURE <span class="text-xs font-bold text-indigo-400 border border-indigo-400 px-2 py-1 rounded ml-2">V5.0 CONTINUITY</span></h1>
-                <p class="text-slate-400 mt-1 text-sm">Moteur d'événements à long terme et économie hebdomadaire.</p>
+                <h1 class="text-2xl font-black text-slate-900 tracking-tight uppercase"><i class="ph-fill ph-boat text-sky-700"></i> Oceanic Executive</h1>
+                <p class="text-slate-500 text-xs font-semibold uppercase tracking-widest mt-1">Maritime Operations & Financial Simulator FY26</p>
             </div>
             <div class="text-right">
-                <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Temps écoulé</p>
-                <p id="ui-turn" class="text-2xl font-black text-indigo-400">Semaine 1</p>
+                <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Exercice Fiscal</p>
+                <p class="text-2xl font-black text-sky-700">Semaine <span id="ui-turn">1</span> / 52</p>
             </div>
         </header>
 
         <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-            <div class="glass-panel p-4 border-t-2 border-t-emerald-500">
-                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Trésorerie</p>
-                <p id="ui-money" class="text-xl font-bold">50 000 €</p>
+            <div class="card p-4 border-t-4 border-t-emerald-500">
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1" title="Liquidités disponibles">Trésorerie (Cash)</p>
+                <p id="ui-money" class="text-lg font-bold">5 000 000 €</p>
             </div>
-            <div class="glass-panel p-4 border-t-2 border-t-sky-500">
-                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Utilisateurs</p>
-                <p id="ui-users" class="text-xl font-bold">0</p>
+            <div class="card p-4 border-t-4 border-t-red-500">
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1" title="Dette Senior @ 6% TAEG">Dette Bancaire</p>
+                <p id="ui-debt" class="text-lg font-bold text-red-600">50 000 000 €</p>
             </div>
-            <div class="glass-panel p-4 border-t-2 border-t-blue-500">
-                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Marque (0-100)</p>
-                <p id="ui-brand" class="text-xl font-bold">50</p>
+            <div class="card p-4 border-t-4 border-t-sky-500">
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1" title="Capacité flotte totale">Capacité (Lits)</p>
+                <p id="ui-capacity" class="text-lg font-bold">3 500</p>
             </div>
-            <div class="glass-panel p-4 border-t-2 border-t-purple-500">
-                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Qualité (0-100)</p>
-                <p id="ui-quality" class="text-xl font-bold">40</p>
+            <div class="card p-4 border-t-4 border-t-indigo-500">
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1" title="Satisfaction Client">CSAT Score</p>
+                <p id="ui-csat" class="text-lg font-bold">85%</p>
             </div>
-            <div class="glass-panel p-4 border-t-2 border-t-orange-500">
-                <p class="text-[10px] text-slate-400 font-bold uppercase mb-1">Moral Équipe</p>
-                <p id="ui-morale" class="text-xl font-bold">70</p>
+            <div class="card p-4 border-t-4 border-t-amber-500">
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1" title="Remplissage T-1">Taux d'occupation</p>
+                <p id="ui-occ" class="text-lg font-bold text-amber-600">0%</p>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1">
             
-            <div class="lg:col-span-8 space-y-6">
+            <div class="lg:col-span-8 space-y-6 flex flex-col">
                 
-                <div class="glass-panel p-6">
-                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="ph-fill ph-sliders text-indigo-400"></i> Socle Stratégique Hebdomadaire (5 Actions)</h2>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="card p-5">
+                        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2"><i class="ph-fill ph-sliders"></i> Yield & Operations (Hebdo)</h2>
                         
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 mb-1">1. Prix Abonnement Mensuel (€)</label>
-                            <input type="number" id="in-price" class="input-dark" value="15" min="0">
-                        </div>
-                        
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 mb-1">2. Budget Marketing (Hebdo)</label>
-                            <input type="number" id="in-marketing" class="input-dark" value="1000" min="0" step="500">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 mb-1">3. Budget R&D (Hebdo)</label>
-                            <input type="number" id="in-rnd" class="input-dark" value="1500" min="0" step="500">
-                        </div>
-
-                        <div>
-                            <label class="block text-xs font-bold text-slate-400 mb-1">4. Serveurs & Infra (Hebdo)</label>
-                            <input type="number" id="in-servers" class="input-dark" value="500" min="0" step="100">
-                        </div>
-
-                        <div class="md:col-span-2 mt-2">
-                            <label class="block text-xs font-bold text-slate-400 mb-2">5. Pression Managériale (Impacte Moral vs Vitesse R&D)</label>
-                            <div class="flex items-center gap-4">
-                                <span class="text-xs text-red-400">Crunch</span>
-                                <input type="range" id="in-hr" min="1" max="5" value="3" class="flex-1 h-1 bg-slate-700 rounded-lg appearance-none cursor-pointer">
-                                <span class="text-xs text-emerald-400">Détente</span>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Prix moyen du billet net (€)</label><span class="text-[10px] text-slate-400">Pour 7 nuits</span></div>
+                                <input type="number" id="in-price" class="input-pro mt-1" value="850" min="200" step="10">
+                            </div>
+                            <div>
+                                <div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Budget Marketing (€)</label><span class="text-[10px] text-slate-400">Acquisition</span></div>
+                                <input type="number" id="in-marketing" class="input-pro mt-1" value="150000" min="0" step="10000">
+                            </div>
+                            <div>
+                                <div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Frais de Bouche & Service (€/passager)</label><span class="text-[10px] text-slate-400">Impacte CSAT</span></div>
+                                <input type="number" id="in-fb" class="input-pro mt-1" value="150" min="50" step="5">
+                            </div>
+                            <div>
+                                <div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Budget Maintenance Navire (€)</label><span class="text-[10px] text-slate-400">Prévient les avaries</span></div>
+                                <input type="number" id="in-maintenance" class="input-pro mt-1" value="100000" min="20000" step="10000">
+                            </div>
+                            <div>
+                                <div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Remboursement Anticipé Dette (€)</label><span class="text-[10px] text-slate-400">Désendettement</span></div>
+                                <input type="number" id="in-repay" class="input-pro mt-1" value="0" min="0" step="50000">
                             </div>
                         </div>
+                    </div>
 
+                    <div class="card p-5 bg-slate-50">
+                        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2"><i class="ph-fill ph-radar"></i> Market Intelligence</h2>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between items-center p-2 bg-white rounded border">
+                                <span class="text-xs font-semibold text-slate-600">Saisonnalité Actuelle</span>
+                                <span id="ui-season" class="font-bold text-sky-600">Basse (Index: 0.8)</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-white rounded border">
+                                <span class="text-xs font-semibold text-slate-600">Prix du Fuel (MFO)</span>
+                                <span id="ui-fuel" class="font-bold">450 € / Tonne</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-white rounded border">
+                                <span class="text-xs font-semibold text-slate-600">Prix Moyen Concurrents</span>
+                                <span id="ui-comp-price" class="font-bold text-slate-800">820 €</span>
+                            </div>
+                            <div class="flex justify-between items-center p-2 bg-white rounded border">
+                                <span class="text-xs font-semibold text-slate-600">Remplissage Concurrents</span>
+                                <span id="ui-comp-occ" class="font-bold text-slate-800">75%</span>
+                            </div>
+                        </div>
+                        <p class="text-[10px] text-slate-500 mt-4 italic">Le marché réagit fortement à la différence entre votre prix et le prix moyen de la concurrence.</p>
                     </div>
                 </div>
 
-                <div class="glass-panel p-6 border-l-4 border-l-indigo-500">
-                    <h2 class="text-lg font-bold mb-4 flex items-center gap-2"><i class="ph-fill ph-git-branch text-indigo-400"></i> Dossiers en Cours (5 Actions)</h2>
-                    <p class="text-xs text-slate-400 mb-4">Ces dossiers dépendent de vos choix précédents et de l'état de votre entreprise.</p>
-                    
-                    <div id="events-container" class="space-y-4">
+                <div class="card p-5 border-l-4 border-l-indigo-600 flex-1 flex flex-col justify-center">
+                    <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-2"><i class="ph-fill ph-envelope-open"></i> Cas Exécutif de la Semaine</h2>
+                    <div id="event-container">
                         </div>
                 </div>
 
-                <button onclick="game.simulateWeek()" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white p-4 rounded-xl font-black text-lg shadow-lg transition transform hover:-translate-y-1">
-                    VALIDER ET PASSER À LA SEMAINE SUIVANTE ➔
+                <button onclick="game.simulateWeek()" class="w-full bg-slate-900 hover:bg-slate-800 text-white p-4 rounded-lg font-black text-lg shadow-lg transition uppercase tracking-widest">
+                    Clôturer la semaine & Générer P&L
                 </button>
             </div>
 
-            <div class="lg:col-span-4 space-y-6">
-                
-                <div class="glass-panel p-5">
-                    <h2 class="text-sm font-bold mb-3 flex items-center gap-2 text-slate-300"><i class="ph-fill ph-brain text-purple-400"></i> Mémoire / Stratégies Actives</h2>
-                    <div id="ui-flags" class="flex flex-wrap gap-2 text-[10px] uppercase font-bold">
-                        <span class="text-slate-500 italic">Aucun projet à long terme actif.</span>
+            <div class="lg:col-span-4">
+                <div class="card p-5 sticky top-6 bg-white shadow-xl">
+                    <div class="flex justify-between items-center border-b-2 border-slate-800 pb-2 mb-4">
+                        <h2 class="text-sm font-black uppercase tracking-widest">Compte de Résultat</h2>
+                        <span class="text-[10px] bg-slate-100 px-2 py-1 rounded font-bold">Semaine <span id="ui-pl-turn">0</span></span>
+                    </div>
+                    
+                    <div id="ui-report" class="font-mono text-xs">
+                        <p class="text-center italic text-slate-400 py-10">En attente de la première clôture d'exploitation.</p>
+                    </div>
+
+                    <div class="mt-6 pt-4 border-t text-center">
+                        <button onclick="game.resetGame()" class="text-[10px] text-red-500 hover:underline uppercase font-bold tracking-widest">Déposer le bilan (Reset)</button>
                     </div>
                 </div>
-
-                <div class="glass-panel p-5 sticky top-6">
-                    <h2 class="text-sm font-bold mb-4 border-b border-slate-700 pb-2 flex justify-between items-center">
-                        <span>Bilan (Semaine <span id="ui-report-turn">0</span>)</span>
-                        <button onclick="game.resetGame()" class="text-[10px] text-red-400 hover:underline uppercase">Reset</button>
-                    </h2>
-                    <div id="ui-report" class="space-y-3 text-xs text-slate-300 font-mono">
-                        <p class="text-center italic opacity-50 py-4">Prenez vos décisions pour voir le premier bilan.</p>
-                    </div>
-                </div>
-
             </div>
         </div>
 
-        <div id="game-over" class="hidden fixed inset-0 bg-slate-950/90 z-50 flex items-center justify-center p-4">
-            <div class="glass-panel p-8 text-center max-w-md w-full border-red-500">
-                <i class="ph-fill ph-skull text-6xl text-red-500 mb-4"></i>
-                <h2 class="text-2xl font-black text-white mb-2">BANQUEROUTE</h2>
-                <button onclick="game.resetGame()" class="mt-4 bg-white text-black px-6 py-2 rounded font-bold">Recommencer</button>
+        <div id="modal-end" class="hidden fixed inset-0 bg-slate-900/95 z-50 flex items-center justify-center p-4">
+            <div class="card p-8 text-center max-w-lg w-full">
+                <i class="ph-fill ph-flag-checkered text-6xl text-sky-600 mb-4"></i>
+                <h2 class="text-2xl font-black text-slate-900 mb-2 uppercase">Fin de l'Exercice Fiscal</h2>
+                <p class="text-slate-600 mb-6 text-sm">Vous avez complété les 52 semaines d'opérations.</p>
+                <div class="bg-slate-100 p-4 rounded mb-6 text-left font-mono text-sm space-y-2">
+                    <div class="flex justify-between"><span>Trésorerie Finale:</span> <span id="end-cash" class="font-bold"></span></div>
+                    <div class="flex justify-between text-red-600"><span>Dette Restante:</span> <span id="end-debt" class="font-bold"></span></div>
+                    <div class="flex justify-between border-t border-slate-300 pt-2 font-black"><span>VALEUR CRÉÉE (NET):</span> <span id="end-value"></span></div>
+                </div>
+                <button onclick="game.resetGame()" class="bg-slate-900 text-white px-6 py-3 rounded font-bold uppercase w-full">Recommencer une année</button>
             </div>
         </div>
 
@@ -143,297 +165,333 @@
         const game = {
             state: {
                 turn: 1,
-                money: 50000,
-                users: 0,
-                brand: 50,
-                quality: 40,
-                morale: 70,
-                flags: {}, // C'EST LE COEUR DU SYSTÈME LONG TERME. Ex: { "ia_started": true }
+                maxTurns: 52,
+                money: 5000000,
+                debt: 50000000,
+                capacity: 3500,
+                csat: 85,
+                occ: 0, // Taux d'occupation en %
+                baseFuelPrice: 450,
+                flags: {},
                 lastReport: null,
                 isGameOver: false
             },
 
-            // LE MOTEUR NARRATIF (Les événements qui s'enchaînent)
-            eventPool: [
-                // --- ARC NARRATIF 1 : L'INTELLIGENCE ARTIFICIELLE ---
-                {
-                    id: "ai_1_pitch",
-                    condition: (s) => s.turn >= 2 && !s.flags.ai_pitched && !s.flags.ai_started,
-                    title: "🤖 Nouveau Projet : Intégrer l'IA",
-                    desc: "Le CTO propose de lancer un projet de recherche sur l'IA sur plusieurs semaines. Coût initial élevé.",
-                    options: [
-                        { text: "Lancer le projet (-10 000€)", effect: (s) => { s.money -= 10000; s.flags.ai_started = true; s.flags.ai_pitched = true; } },
-                        { text: "Trop risqué, on oublie", effect: (s) => { s.flags.ai_pitched = true; } }
-                    ]
-                },
-                {
-                    id: "ai_2_progress",
-                    condition: (s) => s.flags.ai_started && !s.flags.ai_finished && Math.random() > 0.5,
-                    title: "🤖 Point d'étape : Projet IA",
-                    desc: "L'équipe IA a besoin d'une rallonge budgétaire pour acheter des données d'entraînement.",
-                    options: [
-                        { text: "Financer la data (-5 000€)", effect: (s) => { s.money -= 5000; s.flags.ai_finished = true; } },
-                        { text: "Faire avec des données gratuites (-Moral)", effect: (s) => { s.morale -= 10; s.flags.ai_finished = true; } }
-                    ]
-                },
-                {
-                    id: "ai_3_launch",
-                    condition: (s) => s.flags.ai_finished && !s.flags.ai_launched,
-                    title: "🚀 Lancement de l'IA !",
-                    desc: "Le module IA est prêt. Comment le monétiser ?",
-                    options: [
-                        { text: "L'offrir à tous (+Gros boost Marque)", effect: (s) => { s.brand += 15; s.quality += 10; s.flags.ai_launched = true; } },
-                        { text: "Option payante (+Boost Qualité uniquement)", effect: (s) => { s.quality += 20; s.flags.ai_launched = true; s.flags.ai_paid = true; } }
-                    ]
-                },
+            // Renseignement Marché (Change chaque tour)
+            market: { seasonIdx: 1, fuelPrice: 450, compPrice: 850, compOcc: 75 },
 
-                // --- ARC NARRATIF 2 : LE CONCURRENT ---
-                {
-                    id: "rival_1",
-                    condition: (s) => s.users > 1000 && !s.flags.rival_exists,
-                    title: "🥊 Menace : Un clone apparaît",
-                    desc: "Une startup nommée 'CopyCat' vient de lancer exactement le même produit que nous, mais moins cher.",
-                    options: [
-                        { text: "Les attaquer en justice (-8 000€)", effect: (s) => { s.money -= 8000; s.flags.rival_exists = true; s.flags.rival_sued = true; } },
-                        { text: "Ignorer et avancer", effect: (s) => { s.brand -= 5; s.flags.rival_exists = true; } }
-                    ]
-                },
-                {
-                    id: "rival_2_lawsuit",
-                    condition: (s) => s.flags.rival_sued && !s.flags.rival_defeated && Math.random() > 0.6,
-                    title: "⚖️ Verdict du procès CopyCat",
-                    desc: "Le juge a rendu sa décision concernant notre plainte pour plagiat.",
-                    options: [
-                        { text: "Lire le verdict", effect: (s) => { 
-                            if(Math.random() > 0.5) { s.money += 20000; s.brand += 10; s.flags.rival_defeated = true; } // Gagné
-                            else { s.brand -= 10; s.flags.rival_defeated = true; } // Perdu
-                        }}
-                    ]
-                },
+            // Profil de saisonnalité sur 52 semaines (1.0 = normal, 1.4 = Haute saison, 0.6 = Basse saison)
+            seasonality: [
+                0.7,0.7,0.7,0.7, 0.8,0.8,0.9,1.0, 1.0,1.0,1.1,1.2, // Jan-Mar
+                1.1,1.0,1.0,1.0, 0.9,0.9,1.1,1.1, 1.2,1.3,1.4,1.4, // Apr-Jun
+                1.5,1.5,1.5,1.5, 1.4,1.4,1.3,1.1, 0.9,0.8,0.7,0.7, // Jul-Sep
+                0.7,0.8,0.8,0.9, 0.9,0.7,0.7,0.8, 1.0,1.1,1.3,1.4, // Oct-Dec
+                1.5,1.5,1.4,1.0 // Fin d'année
+            ],
 
-                // --- ÉVÉNEMENTS GÉNÉRIQUES (Pour toujours avoir 5 choix minimum) ---
+            events: [
                 {
-                    id: "gen_bug", condition: (s) => true,
-                    title: "🐛 Bug Critique signalé",
-                    desc: "Un bug empêche certains utilisateurs de se connecter. Qui s'en occupe ?",
+                    id: "evt_fuel_spike", condition: () => Math.random() > 0.85,
+                    title: "Tension Géopolitique au Moyen-Orient",
+                    desc: "Les cours du pétrole brut (MFO) s'envolent sur les marchés mondiaux.",
                     options: [
-                        { text: "L'équipe principale (-Vitesse R&D)", effect: (s) => { s.quality -= 2; } },
-                        { text: "Payer un freelance (-1 500€)", effect: (s) => { s.money -= 1500; } }
+                        { text: "Couverture (Hedging) à chaud (-200k€)", effect: (s, m) => { s.money -= 200000; m.fuelPrice *= 1.1; } },
+                        { text: "Subir le prix spot (Risque marge)", effect: (s, m) => { m.fuelPrice *= 1.4; } }
                     ]
                 },
                 {
-                    id: "gen_team", condition: (s) => true,
-                    title: "🍕 Vie d'équipe",
-                    desc: "C'est la fin du mois, faut-il organiser un événement pour l'équipe ?",
+                    id: "evt_strike", condition: () => Math.random() > 0.85,
+                    title: "Préavis de Grève des Dockers",
+                    desc: "Le port de départ principal menace d'être bloqué ce week-end.",
                     options: [
-                        { text: "Soirée Pizza (-500€, +Moral)", effect: (s) => { s.money -= 500; s.morale += 5; } },
-                        { text: "Rien de spécial", effect: (s) => { s.morale -= 2; } }
+                        { text: "Payer un port alternatif (+Coûts portuaires 300k€)", effect: (s) => { s.money -= 300000; } },
+                        { text: "Négocier & Retarder (Baisse CSAT)", effect: (s) => { s.csat -= 10; } }
                     ]
                 },
                 {
-                    id: "gen_ad", condition: (s) => true,
-                    title: "📱 Opportunité Influenceur",
-                    desc: "Un influenceur tech propose de parler de nous.",
+                    id: "evt_competitor_promo", condition: () => Math.random() > 0.8,
+                    title: "Dumping Concurrentiel",
+                    desc: "Votre concurrent principal lance l'opération 'Enfants Gratuits' pour casser les prix.",
                     options: [
-                        { text: "Payer le post (-3 000€, +Marque)", effect: (s) => { s.money -= 3000; s.brand += 5; } },
-                        { text: "Refuser", effect: (s) => {} }
+                        { text: "S'aligner (Baisse du marché)", effect: (s, m) => { m.compPrice *= 0.8; } },
+                        { text: "Maintenir nos prix (Perte de volume)", effect: (s, m) => { m.compOcc += 10; } } // Concurrence prend des parts
                     ]
                 },
                 {
-                    id: "gen_server", condition: (s) => true,
-                    title: "💾 Maintenance Base de données",
-                    desc: "Les serveurs rament un peu avec les nouveaux utilisateurs.",
+                    id: "evt_norovirus", condition: (s) => s.csat < 70 && Math.random() > 0.7,
+                    title: "⚠️ Alerte Sanitaire (Norovirus)",
+                    desc: "La baisse de qualité des prestataires F&B a causé une épidémie gastro-entérite à bord.",
                     options: [
-                        { text: "Optimiser le code (Prend du temps)", effect: (s) => { s.quality -= 1; } },
-                        { text: "Ignorer (Baisse légère de marque)", effect: (s) => { s.brand -= 2; } }
+                        { text: "Dédommagement Total (-1M€)", effect: (s) => { s.money -= 1000000; s.csat -= 5; } },
+                        { text: "Gérer via les assurances (Bad Buzz PR)", effect: (s) => { s.csat -= 25; } }
                     ]
                 },
                 {
-                    id: "gen_feature", condition: (s) => true,
-                    title: "✨ Mini-Feature",
-                    desc: "Un dev a codé un 'Mode Sombre' sur son temps libre. On le déploie ?",
+                    id: "evt_eco_law", condition: (s) => s.turn === 20,
+                    title: "Normes Environnementales (IMO)",
+                    desc: "Une nouvelle taxe carbone portuaire entre en vigueur.",
                     options: [
-                        { text: "Oui (+Qualité)", effect: (s) => { s.quality += 2; } },
-                        { text: "Non, ça peut créer des bugs", effect: (s) => {} }
+                        { text: "Mettre à jour les filtres (-500k€)", effect: (s) => { s.money -= 500000; s.flags.eco = true; } },
+                        { text: "Payer les pénalités hebdo", effect: (s) => { s.flags.eco_tax = true; } }
                     ]
                 }
             ],
 
-            activeEvents: [],
-            eventChoices: {}, // { "ai_1_pitch": 0 }
+            activeEvent: null,
+            eventChoice: 0,
 
             init() {
-                const saved = localStorage.getItem('siliconSim_v5');
+                const saved = localStorage.getItem('oceanicSim_v1');
                 if(saved) this.state = JSON.parse(saved);
-                this.generateEvents();
+                this.updateMarketData();
+                this.generateEvent();
                 this.updateUI();
             },
 
-            // Tire 5 événements pertinents selon l'état actuel (Conditions)
-            generateEvents() {
-                // 1. Filtrer ceux qui remplissent les conditions
-                let eligible = this.eventPool.filter(e => e.condition(this.state));
-                // 2. Mélanger
-                eligible = eligible.sort(() => 0.5 - Math.random());
-                // 3. Garder les 5 premiers
-                this.activeEvents = eligible.slice(0, 5);
+            updateMarketData() {
+                // Index saisonnier (boucle sur le tableau)
+                const seasonIdx = Math.min(51, this.state.turn - 1);
+                const sFactor = this.seasonality[seasonIdx];
                 
-                this.eventChoices = {};
-                this.activeEvents.forEach(e => { this.eventChoices[e.id] = 0; });
+                // Le prix du marché fluctue selon la saison
+                this.market.seasonIdx = seasonIdx;
+                this.market.compPrice = Math.floor(800 * sFactor);
+                this.market.compOcc = Math.min(100, Math.floor(75 * sFactor));
+                
+                // Fuel normalisation progressive (revient vers 450)
+                if(this.market.fuelPrice > 450) this.market.fuelPrice -= 10;
+            },
+
+            generateEvent() {
+                // On filtre les events dont la condition est vraie
+                const eligibles = this.events.filter(e => e.condition(this.state));
+                if(eligibles.length > 0) {
+                    // Prends le premier qui matche
+                    this.activeEvent = eligibles[0];
+                    this.eventChoice = 0;
+                } else {
+                    // Fallback générique si rien ne matche
+                    this.activeEvent = {
+                        title: "Routine Opérationnelle",
+                        desc: "Aucun incident majeur rapporté sur la flotte cette semaine.",
+                        options: [
+                            { text: "Maintenir le cap", effect: () => {} },
+                            { text: "Inspection inopinée (-10k€, +2 CSAT)", effect: (s) => { s.money -= 10000; s.csat += 2; } }
+                        ]
+                    };
+                    this.eventChoice = 0;
+                }
+            },
+
+            selectOption(idx) {
+                this.eventChoice = idx;
+                // Update UI visually for radio
+                document.querySelectorAll('.evt-radio-div').forEach((el, i) => {
+                    if(i === idx) { el.classList.add('border-sky-600', 'bg-sky-50'); el.classList.remove('border-slate-300'); }
+                    else { el.classList.remove('border-sky-600', 'bg-sky-50'); el.classList.add('border-slate-300'); }
+                });
             },
 
             simulateWeek() {
-                if(this.state.isGameOver) return;
+                if(this.state.turn > this.state.maxTurns) return;
 
-                // --- 1. LECTURE DES 5 INPUTS DU SOCLE COMMUN ---
-                const price = parseFloat(document.getElementById('in-price').value) || 0;
+                // --- 1. LECTURE INPUTS ---
+                const price = parseFloat(document.getElementById('in-price').value) || 850;
                 const marketing = parseFloat(document.getElementById('in-marketing').value) || 0;
-                const rnd = parseFloat(document.getElementById('in-rnd').value) || 0;
-                const servers = parseFloat(document.getElementById('in-servers').value) || 0;
-                const hrPolicy = parseInt(document.getElementById('in-hr').value) || 3;
+                const fbCost = parseFloat(document.getElementById('in-fb').value) || 150;
+                const maintenance = parseFloat(document.getElementById('in-maintenance').value) || 100000;
+                const repay = parseFloat(document.getElementById('in-repay').value) || 0;
 
-                const fixedCosts = marketing + rnd + servers;
-                if(this.state.money < fixedCosts) { alert("Trésorerie insuffisante pour vos budgets hebdo !"); return; }
-                this.state.money -= fixedCosts;
+                // Vérif remboursement
+                if(repay > this.state.money) return alert("Trésorerie insuffisante pour ce remboursement anticipé.");
+                this.state.money -= repay;
+                this.state.debt -= repay;
 
-                // --- 2. RÉSOLUTION DES 5 CAS DYNAMIQUES ---
-                this.activeEvents.forEach(event => {
-                    const choiceIndex = this.eventChoices[event.id];
-                    event.options[choiceIndex].effect(this.state);
-                });
+                // --- 2. RÉSOLUTION ÉVÉNEMENT ---
+                this.activeEvent.options[this.eventChoice].effect(this.state, this.market);
 
-                // --- 3. LE MOTEUR ÉCONOMIQUE (Impact des budgets) ---
+                // --- 3. MOTEUR YIELD MANAGEMENT (Demande) ---
+                const sFactor = this.seasonality[this.market.seasonIdx];
+                const priceCompetitiveness = this.market.compPrice / Math.max(1, price);
+                const csatFactor = this.state.csat / 100;
+                const marketingBoost = 1 + (marketing / 500000); // 500k double la visibilité
                 
-                // RH
-                if(hrPolicy <= 2) { this.state.morale -= 5; this.state.quality += 2; } // Pression
-                if(hrPolicy >= 4) { this.state.morale += 5; this.state.quality -= 1; } // Détente
-
-                // R&D & Marque
-                this.state.quality += (rnd / 1000) * (this.state.morale / 100);
-                this.state.brand += (marketing / 1000) * (1 - (this.state.brand / 100));
-
-                // Calcul Utilisateurs (Acquisition - Désabonnement)
-                // L'attractivité dépend de Qualité + Marque. Si le prix est haut, l'attractivité chute.
-                const attractiveness = ((this.state.quality * 1.5) + this.state.brand) / Math.max(1, price * 0.5);
+                // Calcul Remplissage (Base 70% * variables)
+                let rawOcc = 70 * sFactor * priceCompetitiveness * csatFactor * marketingBoost;
+                this.state.occ = Math.min(100, Math.max(0, Math.floor(rawOcc))); // Bridé entre 0 et 100%
                 
-                // Nouveaux inscrits grâce au marketing
-                const newUsers = Math.floor((marketing / 10) * (attractiveness / 50));
-                // Churn (Ceux qui partent si le produit est mauvais ou cher)
-                const churnRate = Math.max(0.01, 0.2 - (this.state.quality / 1000));
-                const lostUsers = Math.floor(this.state.users * churnRate);
+                const pax = Math.floor((this.state.occ / 100) * this.state.capacity);
+
+                // --- 4. ÉVOLUTION CSAT ---
+                // Le F&B standard est ~100€. Moins = baisse, Plus = hausse.
+                const fbImpact = (fbCost - 100) / 10; 
+                // Maintenance basse = risque de panne et baisse CSAT
+                const maintImpact = maintenance < 50000 ? -2 : 1;
+                this.state.csat = Math.max(0, Math.min(100, this.state.csat + fbImpact + maintImpact));
+
+                // --- 5. COMPTE DE RÉSULTAT (P&L) ---
                 
-                this.state.users = Math.max(0, this.state.users + newUsers - lostUsers);
+                // REVENUS
+                const ticketRev = pax * price;
+                // Onboard spend (Casino, Spa, Bar) : très rentable. Dépend du CSAT (clients heureux dépensent plus)
+                const onboardPerPax = 250 * (this.state.csat/100); 
+                const onboardRev = pax * onboardPerPax;
+                const totalRev = ticketRev + onboardRev;
 
-                // Crash Serveurs ? (Si on a trop d'utilisateurs par rapport au budget serveur)
-                const serverCap = servers * 10; // 500€ = 5000 users supportés
-                let crashPenalty = 0;
-                if(this.state.users > serverCap) {
-                    this.state.brand -= 5; // Punition
-                    crashPenalty = (this.state.users - serverCap) * 0.1; // Surtaxe cloud d'urgence
-                    this.state.money -= crashPenalty;
-                }
+                // COÛTS VARIABLES (COGS)
+                const totalFbCost = pax * fbCost;
+                const portTaxes = pax * 50; // Taxe par passager
+                // Fuel: Consommation fixe + variable selon pax. Env 600 tonnes par semaine.
+                const fuelConsumption = 500 + (pax * 0.05); 
+                const fuelCost = fuelConsumption * this.market.fuelPrice;
+                const ecoTax = this.state.flags.eco_tax ? 50000 : 0;
+                
+                const varCosts = totalFbCost + portTaxes + fuelCost + ecoTax;
+                const grossMargin = totalRev - varCosts;
 
-                // --- 4. RENTRÉES D'ARGENT ---
-                // Le prix est mensuel. Sur une semaine, on encaisse 1/4 du revenu.
-                const weeklyRevenue = (this.state.users * price) / 4;
-                this.state.money += weeklyRevenue;
+                // COÛTS FIXES (OPEX)
+                const crewSalaries = 300000; // Base hebdo pour 1000 membres d'équipage
+                const fixedCosts = crewSalaries + marketing + maintenance;
+                
+                const ebitda = grossMargin - fixedCosts;
 
-                // --- 5. BILAN ET FIN ---
+                // FINANCIER & NET
+                // Intérêts de la dette (Ex: 6% annuel -> 6% / 52 semaines = ~0.115% hebdo)
+                const interestExpense = this.state.debt * (0.06 / 52);
+                
+                const netIncome = ebitda - interestExpense;
+
+                // --- 6. BILAN ---
+                this.state.money += netIncome;
+                
                 this.state.lastReport = {
-                    rev: weeklyRevenue,
-                    costs: fixedCosts + crashPenalty,
-                    profit: weeklyRevenue - (fixedCosts + crashPenalty),
-                    newU: newUsers,
-                    lostU: lostUsers
+                    pax, ticketRev, onboardRev, totalRev,
+                    varCosts, fuelCost, totalFbCost, grossMargin,
+                    fixedCosts, marketing, maintenance, ebitda,
+                    interestExpense, netIncome
                 };
 
                 this.state.turn++;
-                // Bridage 0-100
-                ['brand', 'quality', 'morale'].forEach(k => this.state[k] = Math.max(0, Math.min(100, this.state[k])));
-                if(this.state.money < 0) this.state.isGameOver = true;
-
                 this.saveGame();
-                this.generateEvents();
-                this.updateUI();
+                
+                if(this.state.turn > this.state.maxTurns) {
+                    this.endGame();
+                } else {
+                    this.updateMarketData();
+                    this.generateEvent();
+                    this.updateUI();
+                }
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             },
 
-            // --- INTERFACE ---
             updateUI() {
                 const fE = (n) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
-                const fN = (n) => new Intl.NumberFormat('fr-FR').format(Math.floor(n));
-
-                document.getElementById('ui-turn').innerText = "Semaine " + this.state.turn;
+                
+                document.getElementById('ui-turn').innerText = this.state.turn;
                 document.getElementById('ui-money').innerText = fE(this.state.money);
-                document.getElementById('ui-users').innerText = fN(this.state.users);
-                document.getElementById('ui-brand').innerText = Math.floor(this.state.brand);
-                document.getElementById('ui-quality').innerText = Math.floor(this.state.quality);
-                document.getElementById('ui-morale').innerText = Math.floor(this.state.morale);
+                document.getElementById('ui-debt').innerText = fE(this.state.debt);
+                document.getElementById('ui-capacity').innerText = new Intl.NumberFormat('fr-FR').format(this.state.capacity);
+                document.getElementById('ui-csat').innerText = Math.floor(this.state.csat) + "%";
+                document.getElementById('ui-occ').innerText = this.state.occ + "%";
+                
+                // Coloriser CSAT et Remplissage
+                document.getElementById('ui-csat').className = `text-lg font-bold ${this.state.csat < 60 ? 'text-red-600' : 'text-slate-900'}`;
+                document.getElementById('ui-occ').className = `text-lg font-bold ${this.state.occ < 50 ? 'text-red-600' : 'text-amber-600'}`;
 
-                // Rendu des 5 Événements
-                const container = document.getElementById('events-container');
-                container.innerHTML = '';
-                this.activeEvents.forEach(e => {
-                    let html = `<div class="p-4 bg-slate-800 rounded-lg border border-slate-700">
-                        <p class="font-bold text-white mb-1">${e.title}</p>
-                        <p class="text-xs text-slate-400 mb-3">${e.desc}</p>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">`;
-                    
-                    e.options.forEach((opt, idx) => {
-                        const checked = this.eventChoices[e.id] === idx ? 'checked' : '';
-                        html += `
-                        <label class="relative cursor-pointer">
-                            <input type="radio" name="${e.id}" class="peer sr-only event-radio" ${checked} onchange="game.selectOption('${e.id}', ${idx})">
-                            <div class="p-3 text-xs font-medium text-slate-300 border border-slate-600 rounded-lg hover:bg-slate-700 transition">
-                                ${opt.text}
-                            </div>
+                // Market Intel
+                const seasons = { 0.6: "Très Basse", 0.7: "Basse", 0.8: "Basse", 0.9: "Moyenne", 1.0: "Normale", 1.1: "Moyenne Haute", 1.2: "Haute", 1.3: "Très Haute", 1.4: "Pic", 1.5: "Pic" };
+                const curSeasonFactor = this.seasonality[this.market.seasonIdx];
+                
+                let sColor = "text-slate-600";
+                if(curSeasonFactor > 1.1) sColor = "text-emerald-600";
+                if(curSeasonFactor < 0.9) sColor = "text-red-500";
+
+                document.getElementById('ui-season').innerHTML = `<span class="${sColor}">${seasons[curSeasonFactor] || "Normale"} (Idx: ${curSeasonFactor})</span>`;
+                document.getElementById('ui-fuel').innerText = `${Math.floor(this.market.fuelPrice)} € / t`;
+                document.getElementById('ui-comp-price').innerText = `${this.market.compPrice} €`;
+                document.getElementById('ui-comp-occ').innerText = `${this.market.compOcc}%`;
+
+                // Render Event
+                let eHtml = `<h3 class="font-bold text-slate-900">${this.activeEvent.title}</h3>
+                             <p class="text-xs text-slate-600 mb-4 mt-1">${this.activeEvent.desc}</p>
+                             <div class="space-y-2">`;
+                
+                this.activeEvent.options.forEach((opt, idx) => {
+                    const sel = this.eventChoice === idx ? 'border-sky-600 bg-sky-50' : 'border-slate-300';
+                    eHtml += `
+                        <label class="block cursor-pointer">
+                            <input type="radio" name="evt" class="sr-only" ${this.eventChoice === idx ? 'checked' : ''} onchange="game.selectOption(${idx})">
+                            <div class="evt-radio-div p-3 border rounded text-xs font-semibold text-slate-800 transition ${sel}">${opt.text}</div>
                         </label>`;
-                    });
-                    html += `</div></div>`;
-                    container.innerHTML += html;
                 });
+                eHtml += `</div>`;
+                document.getElementById('event-container').innerHTML = eHtml;
 
-                // Rendu des Tags (Mémoire)
-                const flagsDiv = document.getElementById('ui-flags');
-                flagsDiv.innerHTML = '';
-                const flagNames = Object.keys(this.state.flags);
-                if(flagNames.length === 0) {
-                    flagsDiv.innerHTML = `<span class="text-slate-500 italic">Aucun projet à long terme actif.</span>`;
-                } else {
-                    flagNames.forEach(f => {
-                        // Traduction des tags techniques en texte lisible
-                        const labels = { ai_started: "R&D Intelligence Artificielle", ai_launched: "IA Déployée", rival_exists: "Guerre Concurrentielle", rival_sued: "Procès en cours" };
-                        if(labels[f]) flagsDiv.innerHTML += `<span class="bg-indigo-900 text-indigo-300 border border-indigo-700 px-2 py-1 rounded">${labels[f]}</span>`;
-                    });
-                }
-
-                // Rapport
+                // Render P&L
                 if(this.state.lastReport) {
                     const r = this.state.lastReport;
-                    document.getElementById('ui-report-turn').innerText = this.state.turn - 1;
+                    document.getElementById('ui-pl-turn').innerText = this.state.turn - 1;
+                    
                     document.getElementById('ui-report').innerHTML = `
-                        <div class="flex justify-between"><span>Abonnements Hebdo:</span> <span class="text-emerald-400">+${fE(r.rev)}</span></div>
-                        <div class="flex justify-between"><span>Budgets & Frais:</span> <span class="text-red-400">-${fE(r.costs)}</span></div>
-                        <div class="flex justify-between pt-2 border-t border-slate-700 text-sm font-bold ${r.profit >= 0 ? 'text-emerald-400' : 'text-red-400'}">
-                            <span>RÉSULTAT NET:</span> <span>${r.profit >= 0 ? '+' : ''}${fE(r.profit)}</span>
+                        <div class="mb-4 text-center bg-slate-50 p-2 rounded border border-slate-200">
+                            <span class="font-bold text-slate-700 text-sm">Passagers embarqués: ${r.pax}</span>
                         </div>
-                        <div class="mt-4 pt-4 border-t border-slate-700 text-[10px] text-slate-500">
-                            <div>Acquisition: +${fN(r.newU)} users</div>
-                            <div>Désabonnements: -${fN(r.lostU)} users</div>
-                        </div>
+                        <table class="data-table">
+                            <thead><tr><th colspan="2">Revenus Opérationnels</th></tr></thead>
+                            <tbody>
+                                <tr><td>Billetterie (Ticket Rev)</td><td class="val">${fE(r.ticketRev)}</td></tr>
+                                <tr><td>Dépenses à bord (Onboard Rev)</td><td class="val">${fE(r.onboardRev)}</td></tr>
+                                <tr class="bg-slate-50 font-bold border-t-2 border-slate-300 text-sky-800"><td>REVENU TOTAL (Gross Rev)</td><td class="val">${fE(r.totalRev)}</td></tr>
+                            </tbody>
+                            
+                            <thead><tr><th colspan="2" class="pt-4">Coûts Variables (COGS)</th></tr></thead>
+                            <tbody>
+                                <tr><td>Carburant (Bunker Fuel)</td><td class="val negative">-${fE(r.fuelCost)}</td></tr>
+                                <tr><td>Frais de Bouche (F&B)</td><td class="val negative">-${fE(r.totalFbCost)}</td></tr>
+                                <tr><td>Taxes & Portuaires divers</td><td class="val negative">-${fE(r.varCosts - r.fuelCost - r.totalFbCost)}</td></tr>
+                                <tr class="bg-slate-50 font-bold border-t-2 border-slate-300 text-slate-800"><td>MARGE BRUTE (Gross Margin)</td><td class="val">${fE(r.grossMargin)}</td></tr>
+                            </tbody>
+
+                            <thead><tr><th colspan="2" class="pt-4">Coûts Fixes (OPEX)</th></tr></thead>
+                            <tbody>
+                                <tr><td>Équipage & Corporate</td><td class="val negative">-${fE(r.fixedCosts - r.marketing - r.maintenance)}</td></tr>
+                                <tr><td>Marketing & Ventes</td><td class="val negative">-${fE(r.marketing)}</td></tr>
+                                <tr><td>Maintenance Navire</td><td class="val negative">-${fE(r.maintenance)}</td></tr>
+                                <tr class="bg-slate-50 font-bold border-t-2 border-slate-300 text-indigo-800"><td>EBITDA</td><td class="val">${fE(r.ebitda)}</td></tr>
+                            </tbody>
+
+                            <thead><tr><th colspan="2" class="pt-4">Résultat Financier</th></tr></thead>
+                            <tbody>
+                                <tr><td>Service de la Dette (Intérêts)</td><td class="val negative">-${fE(r.interestExpense)}</td></tr>
+                                <tr class="bg-slate-900 font-black text-white mt-2">
+                                    <td class="p-2">RÉSULTAT NET (Net Income)</td>
+                                    <td class="val p-2 ${r.netIncome >= 0 ? 'text-emerald-400' : 'text-red-400'}">${r.netIncome >= 0 ? '+' : ''}${fE(r.netIncome)}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     `;
                 }
-
-                if(this.state.isGameOver) document.getElementById('game-over').classList.remove('hidden');
             },
 
-            selectOption(eventId, choiceIndex) {
-                this.eventChoices[eventId] = choiceIndex;
-                this.updateUI();
+            endGame() {
+                const fE = (n) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
+                document.getElementById('end-cash').innerText = fE(this.state.money);
+                document.getElementById('end-debt').innerText = fE(this.state.debt);
+                
+                // Calcul de création de valeur (Cash final - Cash Initial) + (Dette Remboursée)
+                const startValue = 5000000 - 50000000;
+                const endValue = this.state.money - this.state.debt;
+                const valueCreated = endValue - startValue;
+
+                const evEl = document.getElementById('end-value');
+                evEl.innerText = fE(valueCreated);
+                evEl.className = valueCreated >= 0 ? 'text-emerald-600' : 'text-red-600';
+
+                document.getElementById('modal-end').classList.remove('hidden');
             },
 
-            saveGame() { localStorage.setItem('siliconSim_v5', JSON.stringify(this.state)); },
-            resetGame() { if(confirm("Recommencer à zéro ?")) { localStorage.removeItem('siliconSim_v5'); location.reload(); } }
+            saveGame() { localStorage.setItem('oceanicSim_v1', JSON.stringify(this.state)); },
+            resetGame() { if(confirm("Archiver l'exercice et repartir à zéro ?")) { localStorage.removeItem('oceanicSim_v1'); location.reload(); } }
         };
 
         window.onload = () => game.init();
