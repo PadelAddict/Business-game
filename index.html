@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Oceanic Executive | V7.0 Narrative Engine</title>
+    <title>Oceanic Executive | V8.0 CAPEX Engine</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
@@ -30,7 +30,7 @@
         <header class="flex justify-between items-end mb-6 pb-4 border-b-2 border-slate-800">
             <div>
                 <h1 class="text-2xl font-black text-slate-900 tracking-tight uppercase"><i class="ph-fill ph-boat text-sky-700"></i> Oceanic Executive</h1>
-                <p class="text-slate-500 text-xs font-semibold uppercase tracking-widest mt-1">V7.0 - Dynamic Continuity Engine</p>
+                <p class="text-slate-500 text-xs font-semibold uppercase tracking-widest mt-1">V8.0 - CAPEX & Fleet Management</p>
             </div>
             <div class="text-right">
                 <p class="text-xs text-slate-500 font-bold uppercase tracking-widest">Exercice Fiscal</p>
@@ -38,26 +38,30 @@
             </div>
         </header>
 
-        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
+        <div class="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
             <div class="card p-4 border-t-4 border-t-emerald-500">
                 <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Trésorerie (Cash)</p>
-                <p id="ui-money" class="text-lg font-bold">5 000 000 €</p>
+                <p id="ui-money" class="text-sm md:text-lg font-bold">5 000 000 €</p>
             </div>
             <div class="card p-4 border-t-4 border-t-red-500">
                 <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Dette Bancaire</p>
-                <p id="ui-debt" class="text-lg font-bold text-red-600">50 000 000 €</p>
+                <p id="ui-debt" class="text-sm md:text-lg font-bold text-red-600">50 000 000 €</p>
             </div>
             <div class="card p-4 border-t-4 border-t-sky-500">
-                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Capacité (Lits)</p>
-                <p id="ui-capacity" class="text-lg font-bold">3 500</p>
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Flotte (Navires)</p>
+                <p id="ui-ships" class="text-sm md:text-lg font-bold text-sky-700">1</p>
             </div>
             <div class="card p-4 border-t-4 border-t-indigo-500">
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Capacité (Lits)</p>
+                <p id="ui-capacity" class="text-sm md:text-lg font-bold">3 500</p>
+            </div>
+            <div class="card p-4 border-t-4 border-t-purple-500">
                 <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">CSAT Score</p>
-                <p id="ui-csat" class="text-lg font-bold">85%</p>
+                <p id="ui-csat" class="text-sm md:text-lg font-bold">85%</p>
             </div>
             <div class="card p-4 border-t-4 border-t-amber-500">
-                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Occupation (S-1)</p>
-                <p id="ui-occ" class="text-lg font-bold text-amber-600">0%</p>
+                <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Occupation S-1</p>
+                <p id="ui-occ" class="text-sm md:text-lg font-bold text-amber-600">0%</p>
             </div>
         </div>
 
@@ -65,39 +69,54 @@
             
             <div class="lg:col-span-8 space-y-6 flex flex-col">
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="card p-5">
-                        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2"><i class="ph-fill ph-sliders"></i> Opérations Courantes</h2>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="card p-5 md:col-span-1">
+                        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2"><i class="ph-fill ph-sliders"></i> Operations</h2>
                         <div class="space-y-4">
-                            <div><div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Prix du billet net (€)</label></div><input type="number" id="in-price" class="input-pro mt-1" value="850"></div>
-                            <div><div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Budget Marketing (€)</label></div><input type="number" id="in-marketing" class="input-pro mt-1" value="150000" step="10000"></div>
-                            <div><div class="flex justify-between"><label class="text-xs font-bold text-slate-700">F&B par passager (€)</label></div><input type="number" id="in-fb" class="input-pro mt-1" value="150" step="5"></div>
-                            <div><div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Maintenance Navire (€)</label></div><input type="number" id="in-maintenance" class="input-pro mt-1" value="100000" step="10000"></div>
-                            <div><div class="flex justify-between"><label class="text-xs font-bold text-slate-700">Remboursement Dette (€)</label></div><input type="number" id="in-repay" class="input-pro mt-1" value="0" step="50000"></div>
+                            <div><div class="flex justify-between"><label class="text-[10px] font-bold text-slate-700 uppercase">Prix Billet Net (€)</label></div><input type="number" id="in-price" class="input-pro mt-1" value="850"></div>
+                            <div><div class="flex justify-between"><label class="text-[10px] font-bold text-slate-700 uppercase">Marketing (€)</label></div><input type="number" id="in-marketing" class="input-pro mt-1" value="150000" step="10000"></div>
+                            <div><div class="flex justify-between"><label class="text-[10px] font-bold text-slate-700 uppercase">F&B / Pax (€)</label></div><input type="number" id="in-fb" class="input-pro mt-1" value="150" step="5"></div>
+                            <div><div class="flex justify-between"><label class="text-[10px] font-bold text-slate-700 uppercase">Maintenance (€)</label></div><input type="number" id="in-maintenance" class="input-pro mt-1" value="100000" step="10000"></div>
                         </div>
                     </div>
 
-                    <div class="card p-5 bg-slate-50 flex flex-col">
-                        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2"><i class="ph-fill ph-radar"></i> Intelligence Marché</h2>
-                        <div class="space-y-3 text-sm mb-4">
-                            <div class="flex justify-between items-center p-2 bg-white rounded border"><span class="text-xs font-semibold text-slate-600">Saisonnalité</span><span id="ui-season" class="font-bold text-sky-600">Basse</span></div>
-                            <div class="flex justify-between items-center p-2 bg-white rounded border"><span class="text-xs font-semibold text-slate-600">Prix du Fuel (MFO)</span><span id="ui-fuel" class="font-bold">450 € / t</span></div>
-                            <div class="flex justify-between items-center p-2 bg-white border-l-4 border-l-amber-500 rounded"><span class="text-xs font-semibold text-slate-600">Prix Moyen Concurrents</span><span id="ui-comp-price" class="font-bold text-amber-600">820 €</span></div>
-                            <div class="flex justify-between items-center p-2 bg-white border-l-4 border-l-amber-500 rounded"><span class="text-xs font-semibold text-slate-600">Occupation Concurrents</span><span id="ui-comp-occ" class="font-bold text-amber-600">75%</span></div>
+                    <div class="card p-5 md:col-span-1 border-t-4 border-t-sky-700 bg-sky-50/30">
+                        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2"><i class="ph-fill ph-bank"></i> Finance & CAPEX</h2>
+                        
+                        <div class="mb-4">
+                            <label class="text-[10px] font-bold text-slate-700 uppercase">Rembourser Dette Bancaire (€)</label>
+                            <input type="number" id="in-repay" class="input-pro mt-1 border-sky-300" value="0" step="50000">
+                        </div>
+
+                        <div class="border-t border-sky-200 pt-4 mt-4">
+                            <label class="text-[10px] font-bold text-sky-800 uppercase block mb-2">Commander un Navire (Chantier Naval)</label>
+                            <p class="text-[10px] text-slate-500 mb-2 leading-tight">Coût total: 100M€.<br>Acompte immédiat: -20M€.<br>Solde à la livraison (S+12): -80M€.<br>Capacité: +2500 lits.</p>
+                            <button onclick="game.orderShip()" id="btn-order-ship" class="w-full bg-sky-700 hover:bg-sky-600 text-white text-xs font-bold py-2 rounded transition">
+                                VERSER ACOMPTE (20M€)
+                            </button>
+                        </div>
+                        <div id="ui-ship-status" class="mt-3 text-[10px] font-bold text-sky-600 uppercase space-y-1">
+                            </div>
+                    </div>
+
+                    <div class="card p-5 bg-slate-50 md:col-span-1 flex flex-col">
+                        <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4 border-b pb-2"><i class="ph-fill ph-radar"></i> Intelligence</h2>
+                        <div class="space-y-3 text-xs mb-4">
+                            <div class="flex justify-between items-center p-2 bg-white rounded border"><span class="font-semibold text-slate-600">Saisonnalité</span><span id="ui-season" class="font-bold text-sky-600">Basse</span></div>
+                            <div class="flex justify-between items-center p-2 bg-white rounded border"><span class="font-semibold text-slate-600">Prix Fuel (MFO)</span><span id="ui-fuel" class="font-bold">450 € / t</span></div>
+                            <div class="flex justify-between items-center p-2 bg-white border-l-4 border-l-amber-500 rounded"><span class="font-semibold text-slate-600">Prix Concurrence</span><span id="ui-comp-price" class="font-bold text-amber-600">820 €</span></div>
                         </div>
                         
-                        <h3 class="text-xs font-bold text-slate-800 uppercase mt-auto border-t pt-2 mb-2">Stratégies en cours :</h3>
+                        <h3 class="text-[10px] font-bold text-slate-800 uppercase mt-auto border-t pt-2 mb-2">Stratégies Actives :</h3>
                         <div id="ui-flags" class="flex flex-wrap gap-1 text-[9px] font-bold uppercase">
-                            <span class="text-slate-400 italic">Aucune stratégie long terme active.</span>
+                            <span class="text-slate-400 italic">Aucune.</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="card p-5 border-l-4 border-l-indigo-600 bg-slate-50/50">
-                    <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4"><i class="ph-fill ph-strategy"></i> Dossiers Stratégiques</h2>
-                    <p class="text-xs text-slate-500 mb-6 pb-4 border-b">Attention : Vos décisions ici débloqueront de nouveaux scénarios dans les semaines à venir.</p>
-                    
-                    <div id="cases-container" class="space-y-6">
+                    <h2 class="text-sm font-bold text-slate-800 uppercase tracking-wider mb-4"><i class="ph-fill ph-strategy"></i> Dossiers Stratégiques (5 requis)</h2>
+                    <div id="cases-container" class="space-y-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
                         </div>
                 </div>
 
@@ -110,7 +129,7 @@
                 
                 <div class="card p-5 bg-indigo-900 text-white shadow-lg">
                     <h2 class="text-xs font-black uppercase tracking-widest text-indigo-300 border-b border-indigo-700 pb-2 mb-3"><i class="ph-fill ph-info"></i> Conséquences (S-<span id="ui-fb-turn">0</span>)</h2>
-                    <ul id="ui-feedback" class="text-xs space-y-2 font-medium opacity-90 leading-relaxed">
+                    <ul id="ui-feedback" class="text-[10px] space-y-2 font-medium opacity-90 leading-relaxed">
                         <li class="italic opacity-50 text-center py-4">En attente de clôture.</li>
                     </ul>
                 </div>
@@ -121,8 +140,8 @@
                         <span class="text-[10px] bg-slate-100 px-2 py-1 rounded font-bold">Semaine <span id="ui-pl-turn">0</span></span>
                     </div>
                     
-                    <div id="ui-report" class="font-mono text-xs">
-                        <p class="text-center italic text-slate-400 py-10">En attente de la première clôture d'exploitation.</p>
+                    <div id="ui-report" class="font-mono text-[10px] md:text-xs">
+                        <p class="text-center italic text-slate-400 py-10">En attente d'exploitation.</p>
                     </div>
 
                     <div class="mt-6 pt-4 border-t text-center">
@@ -137,16 +156,12 @@
         const game = {
             state: {
                 turn: 1, maxTurns: 52,
-                money: 5000000, debt: 50000000,
-                capacity: 3500, csat: 85, occ: 0,
-                
-                // LE MOTEUR DE CONTINUITÉ
-                resolvedCases: [], // IDs des cas déjà joués (Pour éviter la redondance)
-                flags: {},         // Drapeaux narratifs (ex: { eco_invest: true })
-                
-                lastReport: null,
-                lastFeedback: [],
-                isGameOver: false
+                money: 25000000, // Cash augmenté au départ pour permettre le premier CAPEX
+                debt: 50000000,
+                ships: 1, capacity: 3500, csat: 85, occ: 0,
+                pendingShips: [], // Array d'objets: { turnReady: 13, capacity: 2500, finalPayment: 80000000 }
+                resolvedCases: [], flags: {},
+                lastReport: null, lastFeedback: [], isGameOver: false
             },
 
             market: { seasonIdx: 1, fuelPrice: 450, compPrice: 850, compOcc: 75 },
@@ -160,148 +175,60 @@
 
             activeCases: [],
 
-            // --- BIBLIOTHÈQUE DE SCÉNARIOS (MOTEUR NARRATIF) ---
+            // --- BIBLIOTHÈQUE MASSSIVE DE SCÉNARIOS (Uniques + Répétables) ---
             caseTemplates: [
-                // ARC NARRATIF 1 : L'APPROVISIONNEMENT F&B
-                {
-                    id: "arc1_food_choice", type: "radio",
-                    title: "[Arc F&B] Appel d'Offres Nourriture",
-                    desc: "Notre contrat F&B arrive à échéance. Le directeur des achats propose deux fournisseurs.",
-                    opts: [
-                        { label: "OcéanFood (Pas cher, surgelé)", val: "cheap" },
-                        { label: "PrimeCut (Viande fraîche, cher)", val: "premium" }
-                    ],
-                    process: (val, state) => {
-                        if(val === "cheap") {
-                            state.flags.fb_cheap = true;
-                            return { pnl: { name: "Bonus Signature OcéanFood", amount: 200000 }, fb: "Vous avez opté pour le fournisseur économique. Prime de signature encaissée (+200k€)." };
-                        } else {
-                            state.flags.fb_premium = true;
-                            state.csat += 5;
-                            return { pnl: null, fb: "Fournisseur Premium choisi. Le chef est ravi, le CSAT monte de suite (+5%)." };
-                        }
-                    }
-                },
-                {
-                    id: "arc1_food_consequence_bad", type: "radio",
-                    condition: (state) => state.flags.fb_cheap, // N'APPARAÎT QUE SI LE CHOIX 'CHEAP' A ÉTÉ FAIT
-                    title: "[Suite] Plaintes sur la Gastronomie",
-                    desc: "Les passagers se plaignent violemment de la qualité de la viande (conséquence de votre choix précédent).",
-                    opts: [
-                        { label: "Distribuer du Champagne gratuit pour compenser", val: "champagne" },
-                        { label: "Ignorer, c'est psychologique", val: "ignore" }
-                    ],
-                    process: (val, state) => {
-                        state.flags.fb_cheap = false; // Fin de l'arc
-                        if(val === "champagne") {
-                            return { pnl: { name: "Compensation Champagne", amount: -80000 }, fb: "Le champagne a calmé les esprits, mais a coûté 80k€." };
-                        } else {
-                            state.csat -= 12;
-                            return { pnl: null, fb: "Plaintes ignorées. Effondrement du CSAT (-12%). Les commentaires TripAdvisor sont terribles." };
-                        }
-                    }
-                },
-                {
-                    id: "arc1_food_consequence_good", type: "radio",
-                    condition: (state) => state.flags.fb_premium, // N'APPARAÎT QUE SI 'PREMIUM'
-                    title: "[Suite] Étoile Maritime",
-                    desc: "Suite à notre investissement Premium, un critique gastronomique célèbre veut embarquer.",
-                    opts: [{ label: "L'accueillir en suite présidentielle (-10k€)", val: "welcome" }],
-                    process: (val, state) => {
-                        state.flags.fb_premium = false; // On ferme l'arc
-                        state.csat += 8;
-                        return { pnl: { name: "Accueil VIP Critique", amount: -10000 }, fb: "Article élogieux publié ! La réputation grimpe en flèche (+8% CSAT)." };
-                    }
-                },
+                // --- ARCS NARRATIFS (Uniques) ---
+                { id: "arc_fb_1", type: "radio", title: "[Arc Achat] Contrat Viande", desc: "Fournisseur F&B à renouveler.", opts: [{ label: "Eco (Surgelé)", val: "cheap" }, { label: "Premium (Frais)", val: "prem" }], process: (v, s) => { if(v==="cheap"){ s.flags.fb_cheap=true; return { pnl:{name:"Prime Signature Eco", amount:200000}, fb:"Contrat éco signé (+200k€)." }; }else{ s.flags.fb_prem=true; s.csat+=5; return { pnl:null, fb:"Qualité premium garantie (+5% CSAT)." }; } } },
+                { id: "arc_fb_2", type: "radio", condition: (s) => s.flags.fb_cheap, title: "[Suite] Plaintes Qualité F&B", desc: "Passagers mécontents de la viande.", opts: [{ label: "Offrir Champagne (-80k€)", val: "c" }, { label: "Ignorer", val: "i" }], process: (v, s) => { s.flags.fb_cheap=false; if(v==="c"){ return { pnl:{name:"Comps Champagne", amount:-80000}, fb:"Le champagne a évité la crise." }; }else{ s.csat-=10; return { pnl:null, fb:"Avis désastreux, chute du CSAT (-10%)." }; } } },
+                
+                { id: "arc_cyber_1", type: "radio", condition: (s) => s.turn > 5, title: "⚠️ Cyberattaque (Ransomware)", desc: "Nos bases de données passagers sont cryptées. Rançon de 500k€ demandée.", opts: [{ label: "Payer la rançon", val: "pay" }, { label: "Restaurer Backup (-200k€ IT, 1 sem. de panne)", val: "it" }], process: (v, s) => { if(v==="pay"){ s.flags.cyber_paid=true; return { pnl:{name:"Paiement Rançon", amount:-500000}, fb:"Rançon payée. Données restaurées rapidement." }; }else{ s.flags.cyber_fight=true; s.csat-=8; return { pnl:{name:"Intervention IT Externe", amount:-200000}, fb:"Backups restaurés mais le site a été HS plusieurs jours (-8% CSAT)." }; } } },
+                { id: "arc_cyber_2", type: "radio", condition: (s) => s.flags.cyber_paid, title: "[Suite] Chantage Data", desc: "Les hackers n'ont pas détruit les données et menacent de les fuiter.", opts: [{ label: "Assumer la fuite (RP de crise)", val: "pr" }], process: (v, s) => { s.flags.cyber_paid=false; s.csat-=15; return { pnl:{name:"Gestion Crise RP", amount:-100000}, fb:"Fuite massive de données. Dégât d'image terrible (-15% CSAT)." }; } },
 
-                // ARC NARRATIF 2 : LA DÉCARBONATION
-                {
-                    id: "arc2_eco_pitch", type: "slider", min: 0, max: 1000000, step: 100000, def: 0,
-                    title: "[Arc Green] Pression Écologique",
-                    desc: "Une ONG menace de bloquer notre port d'attache. Votez un budget d'investissement pour de nouveaux filtres (Scrubbers).",
-                    process: (val, state) => {
-                        const inv = parseInt(val);
-                        if(inv >= 400000) {
-                            state.flags.eco_scrubbers = true;
-                            return { pnl: { name: "Installation Scrubbers", amount: -inv }, fb: `Investissement écologique validé (${inv}€). L'ONG lève le camp.` };
-                        } else {
-                            state.flags.eco_enemy = true;
-                            return { pnl: { name: "Dossier RSE", amount: -inv }, fb: `Investissement jugé insuffisant par l'ONG. Ils promettent de revenir.` };
-                        }
-                    }
-                },
-                {
-                    id: "arc2_eco_tax", type: "radio",
-                    condition: (state) => state.flags.eco_enemy, // N'APPARAÎT QUE SI INVESTISSEMENT FAIBLE
-                    title: "[Suite] Taxe Carbone Punitive",
-                    desc: "Suite au lobby de l'ONG, l'état maritime impose une taxe lourde aux navires non-équipés.",
-                    opts: [
-                        { label: "Payer l'amende", val: "pay" },
-                        { label: "Lancer un recours juridique (-50k€ de frais)", val: "law" }
-                    ],
-                    process: (val, state) => {
-                        state.flags.eco_enemy = false; // Fin de crise
-                        if(val === "pay") {
-                            return { pnl: { name: "Amende Écologique", amount: -300000 }, fb: "Amende salée de 300 000€ encaissée." };
-                        } else {
-                            return { pnl: { name: "Frais Avocats Environnement", amount: -50000 }, fb: "Bataille juridique lancée. Le verdict tombera dans quelques semaines..." };
-                        }
-                    }
-                },
+                { id: "arc_union_1", type: "slider", min: 0, max: 1000000, step: 100000, def: 0, title: "Négociations Syndicales", desc: "Le syndicat de l'équipage demande une prime annuelle globale.", process: (v, s) => { const amt = parseInt(v); if(amt >= 400000){ s.csat+=5; return { pnl:{name:"Primes Équipage", amount:-amt}, fb:"Accord trouvé. L'équipage est très motivé (+5% CSAT)." }; }else{ s.flags.strike_risk=true; return { pnl:{name:"Acompte Négos", amount:-amt}, fb:"Offre refusée par le syndicat. Risque de grève majeur." }; } } },
+                { id: "arc_union_2", type: "radio", condition: (s) => s.flags.strike_risk, title: "🔥 Grève Surprise", desc: "Le personnel de cabine a débrayé ce matin au port.", opts: [{ label: "Céder (+800k€ primes)", val: "pay" }, { label: "Rembourser les clients du jour (-1.5M€)", val: "refund" }], process: (v, s) => { s.flags.strike_risk=false; if(v==="pay"){ return { pnl:{name:"Règlement Grève", amount:-800000}, fb:"Grève levée in extremis en payant très cher." }; }else{ s.csat-=20; return { pnl:{name:"Remboursement Billets (Grève)", amount:-1500000}, fb:"Croisière annulée. Catastrophe financière et PR (-20% CSAT)." }; } } },
 
-                // CAS INDÉPENDANTS & VARIÉS
-                {
-                    id: "evt_casino_bid", type: "number", min: 0, max: 100000, step: 10000, def: 20000,
-                    title: "Animation Casino",
-                    desc: "Combien investir en jetons offerts pour attirer les joueurs au Casino ce soir ? (ROI aléatoire).",
-                    process: (val, state) => {
-                        const inv = parseInt(val);
-                        const roi = inv * (1.5 + Math.random());
-                        return { pnl: { name: "Gains nets Casino", amount: roi - inv }, fb: `Le Casino a rapporté net ${Math.floor(roi - inv)}€ cette semaine.` };
-                    }
-                },
-                {
-                    id: "evt_maintenance_crisis", type: "radio",
-                    condition: (state) => document.getElementById('in-maintenance') && document.getElementById('in-maintenance').value < 50000,
-                    title: "⚠️ Avarie Moteur (Mauvais entretien)",
-                    desc: "Votre budget maintenance était trop faible. Une avarie moteur ralentit le navire.",
-                    opts: [{ label: "Réparation d'urgence héliportée", val: "fix" }],
-                    process: (val, state) => {
-                        state.csat -= 10;
-                        return { pnl: { name: "Réparation Urgence", amount: -250000 }, fb: "250k€ pour la pièce héliportée. Retard sur l'itinéraire : -10% CSAT." };
-                    }
-                },
+                { id: "arc_eco_1", type: "slider", min: 0, max: 1000000, step: 100000, def: 0, title: "[Arc Green] Pression Écologique ONG", desc: "Investissement dans les filtres Scrubbers pour apaiser une ONG.", process: (v, s) => { const amt = parseInt(v); if(amt >= 500000){ s.flags.eco_ok=true; return { pnl:{name:"Filtres Scrubbers", amount:-amt}, fb:"L'ONG est satisfaite, pas de blocage." }; }else{ s.flags.eco_bad=true; return { pnl:{name:"Etudes RSE", amount:-amt}, fb:"Investissement jugé hypocrite. Ils préparent une action." }; } } },
+                { id: "arc_eco_2", type: "radio", condition: (s) => s.flags.eco_bad, title: "[Suite] Blocage du Port par ONG", desc: "Des activistes en kayak bloquent le départ de notre fleuron.", opts: [{ label: "Dédommager port/passagers (-400k€)", val: "pay" }], process: (v, s) => { s.flags.eco_bad=false; s.csat-=10; return { pnl:{name:"Retards Blocage ONG", amount:-400000}, fb:"Départ retardé de 8h. Pertes lourdes et grogne à bord." }; } },
 
-                // CAS REPEATABLES (Bouche-trous pour garantir toujours 5 actions)
-                {
-                    id: "rep_staff_training", type: "slider", min: 0, max: 50000, step: 5000, def: 0, repeatable: true,
-                    title: "[Ops] Formation Équipage",
-                    desc: "Budget optionnel pour la formation du personnel. Améliore légèrement le CSAT.",
-                    process: (val, state) => {
-                        const amt = parseInt(val);
-                        if(amt > 0) state.csat += (amt / 10000);
-                        return { pnl: { name: "Formation Personnel", amount: -amt }, fb: `Formation validée (${amt}€). Impact léger sur la qualité de service.` };
-                    }
-                },
-                {
-                    id: "rep_digital_ads", type: "number", min: 0, max: 100000, step: 5000, def: 0, repeatable: true,
-                    title: "[Ops] Enchères Mots-Clés (Google Ads)",
-                    desc: "Sur-enchérir sur les requêtes 'Croisière pas cher'. (Budget hors budget marketing principal).",
-                    process: (val, state) => {
-                        const amt = parseInt(val);
-                        // Ce budget boost artificiellement le taux de remplissage de la semaine suivante
-                        state.flags.ad_boost = amt; 
-                        return { pnl: { name: "Google Ads Exceptionnel", amount: -amt }, fb: `Campagne digitale boostée de ${amt}€.` };
-                    }
-                }
+                { id: "arc_accident_1", type: "radio", condition: (s) => s.turn > 15, title: "⚠️ Passager à la mer", desc: "Un passager fortement alcoolisé est tombé par dessus bord. Il a été secouru mais porte plainte pour 'manque de sécurité'.", opts: [{ label: "Accord à l'amiable (-300k€)", val: "settle" }, { label: "Procès Public (Frais Avocats -50k€)", val: "trial" }], process: (v, s) => { if(v==="settle"){ return { pnl:{name:"Accord Amiable (NDA)", amount:-300000}, fb:"L'affaire est étouffée rapidement." }; }else{ s.flags.trial_active=true; return { pnl:{name:"Provision Avocats", amount:-50000}, fb:"Nous allons au procès. Verdict dans quelques semaines." }; } } },
+                { id: "arc_accident_2", type: "radio", condition: (s) => s.flags.trial_active, title: "⚖️ Verdict Procès Sécurité", desc: "Le juge rend son verdict sur l'affaire du passager à la mer.", opts: [{ label: "Accepter le jugement", val: "ok" }], process: (v, s) => { s.flags.trial_active=false; if(Math.random()>0.5){ return { pnl:null, fb:"Nous avons GAGNÉ le procès. Le passager était responsable." }; }else{ s.csat-=5; return { pnl:{name:"Condamnation Judiciaire", amount:-800000}, fb:"PERDU. Condamnation de 800k€ et mauvaise presse." }; } } },
+
+                // --- ACTIONS OPÉRATIONNELLES RÉPÉTABLES (Le "Padding" pour avoir toujours 5 cas) ---
+                { id: "rep_ad_google", type: "slider", min: 0, max: 200000, step: 10000, def: 0, repeatable: true, title: "[Ops] Campagne d'Acquisition Digitale", desc: "Enveloppe Ads ponctuelle (génère un pic d'occupation immédiat).", process: (v, s) => { const amt=parseInt(v); s.flags.temp_ad_boost = amt; return { pnl:{name:"Achat Média Ponctuel", amount:-amt}, fb:amt>0?`Boost digital activé (${amt}€).`:"Pas de boost média cette semaine." }; } },
+                { id: "rep_staff_bonus", type: "number", min: 0, max: 50000, step: 5000, def: 0, repeatable: true, title: "[Ops] Primes Qualité Équipage", desc: "Distribuer des micro-primes pour motiver le service à bord (Boost CSAT).", process: (v, s) => { const amt=parseInt(v); if(amt>0) s.csat += (amt/10000); return { pnl:{name:"Micro-Primes Service", amount:-amt}, fb:amt>0?`Primes distribuées. Le CSAT monte légèrement.`:"Pas de primes qualité." }; } },
+                { id: "rep_casino_night", type: "slider", min: 0, max: 80000, step: 10000, def: 20000, repeatable: true, title: "[Ops] Animation Grand Casino", desc: "Offrir des jetons gratuits aux passagers. ROI potentiellement massif.", process: (v, s) => { const amt=parseInt(v); const roi = amt * (0.8 + (Math.random()*2)); return { pnl:{name:"Nuit du Casino (Net)", amount:roi-amt}, fb:`Mise Casino: ${amt}€. Gains générés: ${Math.floor(roi)}€.` }; } },
+                { id: "rep_survey", type: "radio", repeatable: true, title: "[Ops] Audit Satisfaction Client", desc: "Mandater un cabinet pour analyser les failles de notre service (-15k€).", opts: [{ label: "Faire l'audit (-15k€, +2 CSAT)", val: "yes" }, { label: "Ne rien faire", val: "no" }], process: (v, s) => { if(v==="yes"){ s.csat+=2; return { pnl:{name:"Cabinet Audit Externe", amount:-15000}, fb:"L'audit a permis de corriger des frictions à bord (+2% CSAT)." }; }else{ return { pnl:null, fb:"Aucun audit réalisé." }; } } },
+                { id: "rep_maintenance", type: "slider", min: 0, max: 50000, step: 10000, def: 0, repeatable: true, title: "[Ops] Nettoyage Coque (Cale sèche mineure)", desc: "Un nettoyage ponctuel réduit la friction dans l'eau et économise du carburant la semaine suivante.", process: (v, s) => { const amt=parseInt(v); if(amt>=30000){ s.flags.hull_clean=true; return { pnl:{name:"Nettoyage Coque Plongeurs", amount:-amt}, fb:"Coque nettoyée. Consommation de fuel réduite pour la semaine prochaine." }; }else{ return { pnl:null, fb:"Budget nettoyage insuffisant, annulé." }; } } },
+                { id: "rep_pr_stunt", type: "radio", repeatable: true, title: "[Ops] Relations Publiques", desc: "Inviter une centaine d'agents de voyage à déjeuner à bord à quai.", opts: [{ label: "Organiser l'event (-30k€)", val: "yes" }, { label: "Passer le tour", val: "no" }], process: (v, s) => { if(v==="yes"){ s.flags.temp_ad_boost = (s.flags.temp_ad_boost||0) + 100000; return { pnl:{name:"Event Agents Voyage", amount:-30000}, fb:"Les agents sont ravis et vont pousser nos ventes l'équivalent de 100k€ de marketing !" }; }else return { pnl:null, fb:"Event annulé." }; } },
+                { id: "rep_yield_promo", type: "radio", repeatable: true, title: "[Ops] Vente Flash Dernière Minute", desc: "Bradage des cabines vides. Baisse le CSAT (les clients plein tarif râlent) mais remplit le navire.", opts: [{ label: "Lancer la Vente Flash", val: "flash" }, { label: "Maintenir la tarification", val: "hold" }], process: (v, s) => { if(v==="flash"){ s.flags.flash_sale=true; s.csat-=3; return { pnl:{name:"Frais Plateforme Flash", amount:-5000}, fb:"Vente flash activée. L'occupation va grimper, mais la clientèle premium grogne (-3% CSAT)." }; }else return { pnl:null, fb:"Tarification maintenue (Yield strict)." }; } }
             ],
 
             init() {
-                const saved = localStorage.getItem('oceanicSim_v7');
+                const saved = localStorage.getItem('oceanicSim_v8');
                 if(saved) this.state = JSON.parse(saved);
                 this.updateMarketData();
                 this.generateCases();
                 this.updateUI();
+            },
+
+            // --- LE MOTEUR CAPEX (Achat Navires) ---
+            orderShip() {
+                const cost = 100000000; // 100M total
+                const downpayment = 20000000; // 20M acompte
+                
+                if(this.state.money < downpayment) return alert("Trésorerie insuffisante pour l'acompte (20M€ requis). Pensez à l'emprunt bancaire via les événements.");
+                
+                if(confirm(`Voulez-vous commander un nouveau navire ?\nAcompte : 20M€ immédiatement.\nSolde de 80M€ à payer dans 12 semaines.\nSi vous ne pouvez pas payer le solde, vous perdrez l'acompte.`)) {
+                    this.state.money -= downpayment;
+                    this.state.pendingShips.push({
+                        turnReady: this.state.turn + 12,
+                        capacity: 2500, // Le nouveau bateau ajoute 2500 lits
+                        finalPayment: 80000000
+                    });
+                    this.state.lastFeedback.unshift(`<b>CAPEX:</b> Contrat naval signé. Acompte de 20M€ versé.`);
+                    this.saveGame();
+                    this.updateUI();
+                }
             },
 
             updateMarketData() {
@@ -311,27 +238,25 @@
                 
                 const volPrice = 0.9 + (Math.random() * 0.2);
                 const volOcc = 0.9 + (Math.random() * 0.2);
-                
                 this.market.compPrice = Math.floor(800 * sFactor * volPrice);
                 this.market.compOcc = Math.min(100, Math.floor(75 * sFactor * volOcc));
                 
                 const fuelDrift = (Math.random() * 40) - 20;
                 this.market.fuelPrice = Math.max(300, Math.min(800, this.market.fuelPrice + fuelDrift));
+                // Bonus coque propre
+                if(this.state.flags.hull_clean) { this.market.fuelPrice *= 0.9; this.state.flags.hull_clean = false; }
             },
 
-            // LE MOTEUR DE TRI DES CAS (CONTINUITÉ)
             generateCases() {
-                // 1. Filtrer les cas valides (Non joués OU répétables) + Conditions respectées
+                // Filtre les cas non résolus ET dont la condition est remplie
                 let available = this.caseTemplates.filter(c => {
                     const notPlayed = c.repeatable || !this.state.resolvedCases.includes(c.id);
                     const meetsCondition = !c.condition || c.condition(this.state);
                     return notPlayed && meetsCondition;
                 });
 
-                // 2. Mélanger
+                // Mélange et prend 5
                 available = available.sort(() => 0.5 - Math.random());
-
-                // 3. Garder les 5 premiers (ou moins s'il n'y en a pas assez)
                 this.activeCases = available.slice(0, 5);
                 this.activeCases.forEach((c, idx) => c.uid = `case_${this.state.turn}_${idx}`);
             },
@@ -339,21 +264,40 @@
             simulateWeek() {
                 if(this.state.turn > this.state.maxTurns) return;
 
-                // 1. LECTURE INPUTS
+                // 1. INPUTS OPÉRATIONNELS
                 const price = parseFloat(document.getElementById('in-price').value) || 850;
                 let marketing = parseFloat(document.getElementById('in-marketing').value) || 0;
                 const fbCost = parseFloat(document.getElementById('in-fb').value) || 150;
                 const maintenance = parseFloat(document.getElementById('in-maintenance').value) || 100000;
                 const repay = parseFloat(document.getElementById('in-repay').value) || 0;
 
-                if(repay > this.state.money) return alert("Trésorerie insuffisante pour ce remboursement.");
+                if(repay > this.state.money) return alert("Trésorerie insuffisante pour ce remboursement bancaire.");
                 this.state.money -= repay;
                 this.state.debt -= repay;
 
-                // 2. TRAITEMENT DES 5 CAS
                 this.state.lastFeedback = [];
                 let exceptionalPnL = [];
                 
+                // 2. LIVRAISON NAVIRES (CAPEX CHECK)
+                let keptShips = [];
+                this.state.pendingShips.forEach(ship => {
+                    if(this.state.turn === ship.turnReady) {
+                        if(this.state.money >= ship.finalPayment) {
+                            this.state.money -= ship.finalPayment;
+                            this.state.capacity += ship.capacity;
+                            this.state.ships++;
+                            exceptionalPnL.push({ name: "Livraison Navire (Solde)", amount: -ship.finalPayment });
+                            this.state.lastFeedback.push(`<b>FLOTTE:</b> Nouveau navire inauguré ! +${ship.capacity} lits.`);
+                        } else {
+                            this.state.lastFeedback.push(`<b>CATASTROPHE:</b> Impossible de payer le solde du navire (80M€). Commande annulée, acompte de 20M€ perdu !`);
+                        }
+                    } else {
+                        keptShips.push(ship);
+                    }
+                });
+                this.state.pendingShips = keptShips;
+
+                // 3. RÉSOLUTION DES 5 CAS EXÉCUTIFS
                 this.activeCases.forEach(c => {
                     let userVal;
                     if(c.type === 'radio') {
@@ -367,43 +311,42 @@
                     this.state.lastFeedback.push(`<b>${c.title}:</b> ${result.fb}`);
                     if(result.pnl) exceptionalPnL.push(result.pnl);
 
-                    // Mémorisation pour qu'il ne revienne plus
                     if(!c.repeatable) this.state.resolvedCases.push(c.id);
                 });
 
-                // Ajout du boost Ads (Si joué dans un cas répétable)
-                if(this.state.flags.ad_boost) {
-                    marketing += this.state.flags.ad_boost;
-                    this.state.flags.ad_boost = 0;
-                }
+                // Boost Ads & Vente Flash
+                if(this.state.flags.temp_ad_boost) { marketing += this.state.flags.temp_ad_boost; this.state.flags.temp_ad_boost = 0; }
+                let occBoostFlash = this.state.flags.flash_sale ? 1.3 : 1.0;
+                this.state.flags.flash_sale = false;
 
-                // 3. MOTEUR YIELD
+                // 4. MOTEUR YIELD COMMERCIAL
                 const sFactor = this.seasonality[this.market.seasonIdx];
                 const priceComp = this.market.compPrice / Math.max(1, price);
                 const csatFactor = this.state.csat / 100;
                 const mktgBoost = 1 + (marketing / 500000);
                 
-                let rawOcc = 70 * sFactor * priceComp * csatFactor * mktgBoost;
+                let rawOcc = 70 * sFactor * priceComp * csatFactor * mktgBoost * occBoostFlash;
                 this.state.occ = Math.min(100, Math.max(0, Math.floor(rawOcc)));
                 const pax = Math.floor((this.state.occ / 100) * this.state.capacity);
 
                 this.state.csat = Math.max(0, Math.min(100, this.state.csat + ((fbCost - 100) / 10)));
 
-                // 4. P&L DE BASE
+                // 5. P&L CALCULATION
                 const ticketRev = pax * price;
                 const onboardRev = pax * (250 * (this.state.csat/100));
                 const totalRev = ticketRev + onboardRev;
 
                 const totalFbCost = pax * fbCost;
                 const portTaxes = pax * 50;
-                const fuelCost = (500 + (pax * 0.05)) * this.market.fuelPrice;
+                // Fuel scale with ships
+                const fuelCost = (this.state.ships * 500 + (pax * 0.05)) * this.market.fuelPrice;
                 const varCosts = totalFbCost + portTaxes + fuelCost;
                 const grossMargin = totalRev - varCosts;
 
-                const fixedCosts = 300000 + marketing + maintenance;
+                // Crew scale with ships
+                const fixedCosts = (this.state.ships * 300000) + marketing + maintenance;
                 let ebitda = grossMargin - fixedCosts;
 
-                // 5. INTÉGRATION P&L EXCEPTIONNEL
                 let totalExceptional = 0;
                 exceptionalPnL.forEach(line => totalExceptional += line.amount);
                 
@@ -413,10 +356,8 @@
                 this.state.money += netIncome;
                 
                 this.state.lastReport = {
-                    pax, ticketRev, onboardRev, totalRev,
-                    varCosts, fuelCost, totalFbCost, grossMargin,
-                    fixedCosts, marketing, maintenance, ebitda,
-                    exceptionalPnL, totalExceptional,
+                    pax, ticketRev, onboardRev, totalRev, varCosts, fuelCost, totalFbCost, grossMargin,
+                    fixedCosts, marketing, maintenance, ebitda, exceptionalPnL, totalExceptional,
                     interestExpense, netIncome
                 };
 
@@ -432,83 +373,62 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             },
 
-            // --- INTERFACE (INCHANGÉE MAIS OPTIMISÉE) ---
+            // --- UI RENDERING ---
             updateUI() {
                 const fE = (n) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
                 
                 document.getElementById('ui-turn').innerText = this.state.turn;
                 document.getElementById('ui-money').innerText = fE(this.state.money);
                 document.getElementById('ui-debt').innerText = fE(this.state.debt);
+                document.getElementById('ui-ships').innerText = this.state.ships;
                 document.getElementById('ui-capacity').innerText = new Intl.NumberFormat('fr-FR').format(this.state.capacity);
                 document.getElementById('ui-csat').innerText = Math.floor(this.state.csat) + "%";
                 document.getElementById('ui-occ').innerText = this.state.occ + "%";
                 
-                document.getElementById('ui-csat').className = `text-lg font-bold ${this.state.csat < 60 ? 'text-red-600' : 'text-slate-900'}`;
-                document.getElementById('ui-occ').className = `text-lg font-bold ${this.state.occ < 50 ? 'text-red-600' : 'text-amber-600'}`;
+                document.getElementById('ui-csat').className = `text-sm md:text-lg font-bold ${this.state.csat < 60 ? 'text-red-600' : 'text-slate-900'}`;
+                document.getElementById('ui-occ').className = `text-sm md:text-lg font-bold ${this.state.occ < 50 ? 'text-red-600' : 'text-amber-600'}`;
+
+                // Affichage statut livraisons navires
+                const shipStatusDiv = document.getElementById('ui-ship-status');
+                shipStatusDiv.innerHTML = '';
+                this.state.pendingShips.forEach((s, idx) => {
+                    shipStatusDiv.innerHTML += `<div class="bg-white p-2 rounded shadow-sm">Chantier #${idx+1} : Livraison S+${s.turnReady - this.state.turn} <br><span class="text-[9px] text-slate-500">Solde à prévoir : ${fE(s.finalPayment)}</span></div>`;
+                });
 
                 const sFactor = this.seasonality[this.market.seasonIdx];
                 document.getElementById('ui-season').innerText = `Index: ${sFactor.toFixed(2)}`;
                 document.getElementById('ui-fuel').innerText = `${Math.floor(this.market.fuelPrice)} € / t`;
                 document.getElementById('ui-comp-price').innerText = `${this.market.compPrice} €`;
-                document.getElementById('ui-comp-occ').innerText = `${this.market.compOcc}%`;
 
-                // Affichage des Flags Actifs (Pour le joueur)
-                const flagsDiv = document.getElementById('ui-flags');
-                flagsDiv.innerHTML = '';
-                const activeFlags = Object.keys(this.state.flags).filter(k => this.state.flags[k]);
-                if(activeFlags.length === 0) flagsDiv.innerHTML = `<span class="text-slate-400 italic">Aucune stratégie long terme active.</span>`;
-                else {
-                    const labels = { fb_cheap: "Contrat F&B Eco", fb_premium: "Contrat F&B Premium", eco_scrubbers: "Normes Eco Validées", eco_enemy: "Conflit ONG en cours" };
-                    activeFlags.forEach(f => {
-                        if(labels[f]) flagsDiv.innerHTML += `<span class="bg-indigo-100 text-indigo-800 border border-indigo-200 px-2 py-1 rounded">${labels[f]}</span>`;
-                    });
-                }
-
-                // Génération HTML des Cas
+                // Render Cases
                 const casesContainer = document.getElementById('cases-container');
                 casesContainer.innerHTML = '';
                 this.activeCases.forEach((c, index) => {
-                    let html = `<div class="bg-white p-4 rounded shadow-sm border border-slate-200">
-                        <h3 class="font-bold text-slate-800 text-sm">Dossier #${index+1} : ${c.title}</h3>
-                        <p class="text-xs text-slate-500 mb-3">${c.desc}</p>
-                        <div class="mt-2">`;
-                    
+                    let html = `<div class="bg-white p-4 rounded shadow-sm border border-slate-200 mt-0"><h3 class="font-bold text-slate-800 text-[11px] uppercase tracking-wider">Dossier #${index+1} : ${c.title}</h3><p class="text-[10px] text-slate-500 mb-3 leading-snug">${c.desc}</p><div class="mt-2">`;
                     if(c.type === 'radio') {
                         html += `<div class="flex flex-col gap-2">`;
-                        c.opts.forEach((opt, i) => {
-                            html += `<label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
-                                        <input type="radio" name="${c.uid}" value="${opt.val}" ${i===0?'checked':''}>
-                                        ${opt.label}
-                                     </label>`;
-                        });
+                        c.opts.forEach((opt, i) => { html += `<label class="flex items-center gap-2 text-[10px] font-semibold text-slate-700 cursor-pointer"><input type="radio" name="${c.uid}" value="${opt.val}" ${i===0?'checked':''}>${opt.label}</label>`; });
                         html += `</div>`;
                     } else if(c.type === 'slider') {
-                        html += `<div class="flex items-center gap-3">
-                                    <input type="range" id="in_${c.uid}" class="slider-pro flex-1" min="${c.min}" max="${c.max}" step="${c.step}" value="${c.def}" oninput="document.getElementById('val_${c.uid}').innerText = new Intl.NumberFormat('fr-FR').format(this.value) + ' €'">
-                                    <span id="val_${c.uid}" class="text-xs font-bold text-indigo-700 w-24 text-right">${new Intl.NumberFormat('fr-FR').format(c.def)} €</span>
-                                 </div>`;
+                        html += `<div class="flex flex-col gap-1"><input type="range" id="in_${c.uid}" class="slider-pro w-full" min="${c.min}" max="${c.max}" step="${c.step}" value="${c.def}" oninput="document.getElementById('val_${c.uid}').innerText = new Intl.NumberFormat('fr-FR').format(this.value) + ' €'"><div id="val_${c.uid}" class="text-[10px] font-bold text-indigo-700 text-right">${new Intl.NumberFormat('fr-FR').format(c.def)} €</div></div>`;
                     } else if(c.type === 'number') {
-                        html += `<div class="flex items-center gap-2">
-                                    <span class="text-xs font-bold text-slate-500">Montant (€):</span>
-                                    <input type="number" id="in_${c.uid}" class="input-pro w-32" min="${c.min}" max="${c.max}" step="${c.step}" value="${c.def}">
-                                 </div>`;
+                        html += `<div class="flex items-center gap-2"><span class="text-[10px] font-bold text-slate-500">Montant (€):</span><input type="number" id="in_${c.uid}" class="input-pro w-full" min="${c.min}" max="${c.max}" step="${c.step}" value="${c.def}"></div>`;
                     }
                     html += `</div></div>`;
                     casesContainer.innerHTML += html;
                 });
 
-                // MAJ Feedback
+                // Render Feedback
                 const fbList = document.getElementById('ui-feedback');
                 if(this.state.lastFeedback.length > 0) {
                     document.getElementById('ui-fb-turn').innerText = this.state.turn - 1;
                     fbList.innerHTML = this.state.lastFeedback.map(fb => `<li class="border-b border-indigo-800 pb-2 last:border-0">${fb}</li>`).join('');
                 }
 
-                // MAJ P&L
+                // Render P&L
                 if(this.state.lastReport) {
                     const r = this.state.lastReport;
                     document.getElementById('ui-pl-turn').innerText = this.state.turn - 1;
-                    
                     let execHtml = '';
                     if(r.exceptionalPnL.length > 0) {
                         execHtml = `<thead><tr><th colspan="2" class="pt-4 text-indigo-800">Opérations Exceptionnelles</th></tr></thead><tbody>`;
@@ -518,39 +438,18 @@
                         });
                         execHtml += `<tr class="bg-indigo-50 font-bold border-t border-slate-300"><td>SOUS-TOTAL EXCEPTIONNEL</td><td class="val ${r.totalExceptional < 0 ? 'negative' : 'positive'}">${fE(r.totalExceptional)}</td></tr></tbody>`;
                     }
-
                     document.getElementById('ui-report').innerHTML = `
                         <div class="mb-4 text-center bg-slate-50 p-2 rounded border border-slate-200"><span class="font-bold text-slate-700 text-sm">Passagers embarqués: ${r.pax}</span></div>
                         <table class="data-table">
                             <thead><tr><th colspan="2">Revenus Opérationnels</th></tr></thead>
-                            <tbody>
-                                <tr><td>Billetterie</td><td class="val">${fE(r.ticketRev)}</td></tr>
-                                <tr><td>Dépenses à bord</td><td class="val">${fE(r.onboardRev)}</td></tr>
-                                <tr class="bg-slate-50 font-bold border-t-2 border-slate-300"><td>REVENU TOTAL</td><td class="val">${fE(r.totalRev)}</td></tr>
-                            </tbody>
+                            <tbody><tr><td>Billetterie</td><td class="val">${fE(r.ticketRev)}</td></tr><tr><td>Dépenses à bord</td><td class="val">${fE(r.onboardRev)}</td></tr><tr class="bg-slate-50 font-bold border-t-2 border-slate-300"><td>REVENU TOTAL</td><td class="val">${fE(r.totalRev)}</td></tr></tbody>
                             <thead><tr><th colspan="2" class="pt-4">Coûts Variables (COGS)</th></tr></thead>
-                            <tbody>
-                                <tr><td>Carburant</td><td class="val negative">-${fE(r.fuelCost)}</td></tr>
-                                <tr><td>Frais de Bouche</td><td class="val negative">-${fE(r.totalFbCost)}</td></tr>
-                                <tr><td>Taxes</td><td class="val negative">-${fE(r.varCosts - r.fuelCost - r.totalFbCost)}</td></tr>
-                                <tr class="bg-slate-50 font-bold border-t-2 border-slate-300"><td>MARGE BRUTE</td><td class="val">${fE(r.grossMargin)}</td></tr>
-                            </tbody>
+                            <tbody><tr><td>Carburant</td><td class="val negative">-${fE(r.fuelCost)}</td></tr><tr><td>Frais de Bouche</td><td class="val negative">-${fE(r.totalFbCost)}</td></tr><tr><td>Taxes</td><td class="val negative">-${fE(r.varCosts - r.fuelCost - r.totalFbCost)}</td></tr><tr class="bg-slate-50 font-bold border-t-2 border-slate-300"><td>MARGE BRUTE</td><td class="val">${fE(r.grossMargin)}</td></tr></tbody>
                             <thead><tr><th colspan="2" class="pt-4">Coûts Fixes (OPEX)</th></tr></thead>
-                            <tbody>
-                                <tr><td>Équipage & Siège</td><td class="val negative">-${fE(r.fixedCosts - r.marketing - r.maintenance)}</td></tr>
-                                <tr><td>Marketing & Ventes</td><td class="val negative">-${fE(r.marketing)}</td></tr>
-                                <tr><td>Maintenance Navire</td><td class="val negative">-${fE(r.maintenance)}</td></tr>
-                                <tr class="bg-slate-50 font-bold border-t-2 border-slate-300"><td>EBITDA</td><td class="val">${fE(r.ebitda)}</td></tr>
-                            </tbody>
+                            <tbody><tr><td>Équipage & Siège</td><td class="val negative">-${fE(r.fixedCosts - r.marketing - r.maintenance)}</td></tr><tr><td>Marketing & Ventes</td><td class="val negative">-${fE(r.marketing)}</td></tr><tr><td>Maintenance Navire</td><td class="val negative">-${fE(r.maintenance)}</td></tr><tr class="bg-slate-50 font-bold border-t-2 border-slate-300"><td>EBITDA</td><td class="val">${fE(r.ebitda)}</td></tr></tbody>
                             ${execHtml}
                             <thead><tr><th colspan="2" class="pt-4">Résultat Financier</th></tr></thead>
-                            <tbody>
-                                <tr><td>Intérêts de la Dette</td><td class="val negative">-${fE(r.interestExpense)}</td></tr>
-                                <tr class="bg-slate-900 font-black text-white mt-2">
-                                    <td class="p-2">RÉSULTAT NET (Net Income)</td>
-                                    <td class="val p-2 ${r.netIncome >= 0 ? 'text-emerald-400' : 'text-red-400'}">${r.netIncome >= 0 ? '+' : ''}${fE(r.netIncome)}</td>
-                                </tr>
-                            </tbody>
+                            <tbody><tr><td>Intérêts Dette</td><td class="val negative">-${fE(r.interestExpense)}</td></tr><tr class="bg-slate-900 font-black text-white mt-2"><td class="p-2">RÉSULTAT NET (Net Income)</td><td class="val p-2 ${r.netIncome >= 0 ? 'text-emerald-400' : 'text-red-400'}">${r.netIncome >= 0 ? '+' : ''}${fE(r.netIncome)}</td></tr></tbody>
                         </table>
                     `;
                 }
@@ -560,15 +459,17 @@
                 const fE = (n) => new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 }).format(n);
                 document.getElementById('end-cash').innerText = fE(this.state.money);
                 document.getElementById('end-debt').innerText = fE(this.state.debt);
-                const valueCreated = (this.state.money - this.state.debt) - (5000000 - 50000000);
+                // Calcul = Valeur finale (Cash - Dette + Valeur navires achetés) - Valeur initiale
+                const finalShipValue = (this.state.ships - 1) * 100000000;
+                const valueCreated = (this.state.money - this.state.debt + finalShipValue) - (25000000 - 50000000);
                 const evEl = document.getElementById('end-value');
                 evEl.innerText = fE(valueCreated);
                 evEl.className = valueCreated >= 0 ? 'text-emerald-600' : 'text-red-600';
                 document.getElementById('modal-end').classList.remove('hidden');
             },
 
-            saveGame() { localStorage.setItem('oceanicSim_v7', JSON.stringify(this.state)); },
-            resetGame() { if(confirm("Archiver l'exercice et repartir à zéro ?")) { localStorage.removeItem('oceanicSim_v7'); location.reload(); } }
+            saveGame() { localStorage.setItem('oceanicSim_v8', JSON.stringify(this.state)); },
+            resetGame() { if(confirm("Archiver l'exercice et repartir à zéro ?")) { localStorage.removeItem('oceanicSim_v8'); location.reload(); } }
         };
 
         window.onload = () => game.init();
